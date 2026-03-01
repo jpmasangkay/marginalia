@@ -14,6 +14,7 @@ import { DayButton, DayPicker, getDefaultClassNames } from 'react-day-picker'
 import { cn } from '@/lib/utils'
 import { Button, buttonVariants } from '@/components/ui/button'
 
+// Function Calendar: handles a specific piece of application logic.
 function Calendar({
   className,
   classNames,
@@ -39,7 +40,8 @@ function Calendar({
       )}
       captionLayout={captionLayout}
       formatters={{
-        formatMonthDropdown: (date) =>
+        formatMonthDropdown:         // Function: implements scoped behavior for this module.
+(date) =>
           date.toLocaleString('default', { month: 'short' }),
         ...formatters,
       }}
@@ -128,7 +130,8 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        Root: ({ className, rootRef, ...props }) => {
+        Root:         // Function: implements scoped behavior for this module.
+({ className, rootRef, ...props }) => {
           return (
             <div
               data-slot="calendar"
@@ -138,7 +141,8 @@ function Calendar({
             />
           )
         },
-        Chevron: ({ className, orientation, ...props }) => {
+        Chevron:         // Function: implements scoped behavior for this module.
+({ className, orientation, ...props }) => {
           if (orientation === 'left') {
             return (
               <ChevronLeftIcon className={cn('size-4', className)} {...props} />
@@ -159,7 +163,8 @@ function Calendar({
           )
         },
         DayButton: CalendarDayButton,
-        WeekNumber: ({ children, ...props }) => {
+        WeekNumber:         // Function: implements scoped behavior for this module.
+({ children, ...props }) => {
           return (
             <td {...props}>
               <div className="flex size-(--cell-size) items-center justify-center text-center">
@@ -175,6 +180,7 @@ function Calendar({
   )
 }
 
+// Function CalendarDayButton: handles a specific piece of application logic.
 function CalendarDayButton({
   className,
   day,
@@ -184,7 +190,8 @@ function CalendarDayButton({
   const defaultClassNames = getDefaultClassNames()
 
   const ref = React.useRef<HTMLButtonElement>(null)
-  React.useEffect(() => {
+  React.useEffect(  // Function: implements scoped behavior for this module.
+() => {
     if (modifiers.focused) ref.current?.focus()
   }, [modifiers.focused])
 

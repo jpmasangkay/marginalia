@@ -9,6 +9,7 @@ import { CheckIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
+// Function Checkbox: handles a specific piece of application logic.
 function Checkbox({
   className,
   ...props

@@ -5,6 +5,7 @@
 
 import * as AspectRatioPrimitive from '@radix-ui/react-aspect-ratio'
 
+// Function AspectRatio: handles a specific piece of application logic.
 function AspectRatio({
   ...props
 }: React.ComponentProps<typeof AspectRatioPrimitive.Root>) {

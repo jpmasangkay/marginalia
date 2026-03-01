@@ -13,6 +13,7 @@ import {
 
 import { cn } from '@/lib/utils'
 
+// Function ResizablePanelGroup: handles a specific piece of application logic.
 function ResizablePanelGroup({
   className,
   ...props
@@ -29,12 +30,14 @@ function ResizablePanelGroup({
   )
 }
 
+// Function ResizablePanel: handles a specific piece of application logic.
 function ResizablePanel({
   ...props
 }: React.ComponentProps<typeof Panel>) {
   return <Panel data-slot="resizable-panel" {...props} />
 }
 
+// Function ResizableHandle: handles a specific piece of application logic.
 function ResizableHandle({
   withHandle,
   className,

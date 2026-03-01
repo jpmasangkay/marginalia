@@ -9,6 +9,7 @@ import { CircleIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
+// Function RadioGroup: handles a specific piece of application logic.
 function RadioGroup({
   className,
   ...props
@@ -22,6 +23,7 @@ function RadioGroup({
   )
 }
 
+// Function RadioGroupItem: handles a specific piece of application logic.
 function RadioGroupItem({
   className,
   ...props

@@ -5,17 +5,21 @@ import * as React from 'react'
 
 const MOBILE_BREAKPOINT = 768
 
+// Function useIsMobile: handles a specific piece of application logic.
 export function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
 
-  React.useEffect(() => {
+  React.useEffect(  // Function: implements scoped behavior for this module.
+() => {
     const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
-    const onChange = () => {
+    const onChange =     // Function onChange: implements reusable behavior.
+() => {
       setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
     }
     mql.addEventListener('change', onChange)
     setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
-    return () => mql.removeEventListener('change', onChange)
+    return     // Function: implements scoped behavior for this module.
+() => mql.removeEventListener('change', onChange)
   }, [])
 
   return !!isMobile

@@ -8,6 +8,7 @@ import * as TabsPrimitive from '@radix-ui/react-tabs'
 
 import { cn } from '@/lib/utils'
 
+// Function Tabs: handles a specific piece of application logic.
 function Tabs({
   className,
   ...props
@@ -21,6 +22,7 @@ function Tabs({
   )
 }
 
+// Function TabsList: handles a specific piece of application logic.
 function TabsList({
   className,
   ...props
@@ -37,6 +39,7 @@ function TabsList({
   )
 }
 
+// Function TabsTrigger: handles a specific piece of application logic.
 function TabsTrigger({
   className,
   ...props
@@ -53,6 +56,7 @@ function TabsTrigger({
   )
 }
 
+// Function TabsContent: handles a specific piece of application logic.
 function TabsContent({
   className,
   ...props

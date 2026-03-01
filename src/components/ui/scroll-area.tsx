@@ -8,6 +8,7 @@ import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area'
 
 import { cn } from '@/lib/utils'
 
+// Function ScrollArea: handles a specific piece of application logic.
 function ScrollArea({
   className,
   children,
@@ -31,6 +32,7 @@ function ScrollArea({
   )
 }
 
+// Function ScrollBar: handles a specific piece of application logic.
 function ScrollBar({
   className,
   orientation = 'vertical',

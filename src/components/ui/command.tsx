@@ -16,6 +16,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
+// Function Command: handles a specific piece of application logic.
 function Command({
   className,
   ...props
@@ -32,6 +33,7 @@ function Command({
   )
 }
 
+// Function CommandDialog: handles a specific piece of application logic.
 function CommandDialog({
   title = 'Command Palette',
   description = 'Search for a command to run...',
@@ -63,6 +65,7 @@ function CommandDialog({
   )
 }
 
+// Function CommandInput: handles a specific piece of application logic.
 function CommandInput({
   className,
   ...props
@@ -85,6 +88,7 @@ function CommandInput({
   )
 }
 
+// Function CommandList: handles a specific piece of application logic.
 function CommandList({
   className,
   ...props
@@ -101,6 +105,7 @@ function CommandList({
   )
 }
 
+// Function CommandEmpty: handles a specific piece of application logic.
 function CommandEmpty({
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.Empty>) {
@@ -113,6 +118,7 @@ function CommandEmpty({
   )
 }
 
+// Function CommandGroup: handles a specific piece of application logic.
 function CommandGroup({
   className,
   ...props
@@ -129,6 +135,7 @@ function CommandGroup({
   )
 }
 
+// Function CommandSeparator: handles a specific piece of application logic.
 function CommandSeparator({
   className,
   ...props
@@ -142,6 +149,7 @@ function CommandSeparator({
   )
 }
 
+// Function CommandItem: handles a specific piece of application logic.
 function CommandItem({
   className,
   ...props
@@ -158,6 +166,7 @@ function CommandItem({
   )
 }
 
+// Function CommandShortcut: handles a specific piece of application logic.
 function CommandShortcut({
   className,
   ...props

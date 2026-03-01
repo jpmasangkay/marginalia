@@ -8,6 +8,7 @@ import * as AvatarPrimitive from '@radix-ui/react-avatar'
 
 import { cn } from '@/lib/utils'
 
+// Function Avatar: handles a specific piece of application logic.
 function Avatar({
   className,
   ...props
@@ -24,6 +25,7 @@ function Avatar({
   )
 }
 
+// Function AvatarImage: handles a specific piece of application logic.
 function AvatarImage({
   className,
   ...props
@@ -37,6 +39,7 @@ function AvatarImage({
   )
 }
 
+// Function AvatarFallback: handles a specific piece of application logic.
 function AvatarFallback({
   className,
   ...props

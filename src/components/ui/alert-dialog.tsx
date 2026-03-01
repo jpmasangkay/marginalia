@@ -9,12 +9,14 @@ import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 
+// Function AlertDialog: handles a specific piece of application logic.
 function AlertDialog({
   ...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Root>) {
   return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />
 }
 
+// Function AlertDialogTrigger: handles a specific piece of application logic.
 function AlertDialogTrigger({
   ...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Trigger>) {
@@ -23,6 +25,7 @@ function AlertDialogTrigger({
   )
 }
 
+// Function AlertDialogPortal: handles a specific piece of application logic.
 function AlertDialogPortal({
   ...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Portal>) {
@@ -31,6 +34,7 @@ function AlertDialogPortal({
   )
 }
 
+// Function AlertDialogOverlay: handles a specific piece of application logic.
 function AlertDialogOverlay({
   className,
   ...props
@@ -47,6 +51,7 @@ function AlertDialogOverlay({
   )
 }
 
+// Function AlertDialogContent: handles a specific piece of application logic.
 function AlertDialogContent({
   className,
   ...props
@@ -66,6 +71,7 @@ function AlertDialogContent({
   )
 }
 
+// Function AlertDialogHeader: handles a specific piece of application logic.
 function AlertDialogHeader({
   className,
   ...props
@@ -79,6 +85,7 @@ function AlertDialogHeader({
   )
 }
 
+// Function AlertDialogFooter: handles a specific piece of application logic.
 function AlertDialogFooter({
   className,
   ...props
@@ -95,6 +102,7 @@ function AlertDialogFooter({
   )
 }
 
+// Function AlertDialogTitle: handles a specific piece of application logic.
 function AlertDialogTitle({
   className,
   ...props
@@ -108,6 +116,7 @@ function AlertDialogTitle({
   )
 }
 
+// Function AlertDialogDescription: handles a specific piece of application logic.
 function AlertDialogDescription({
   className,
   ...props
@@ -121,6 +130,7 @@ function AlertDialogDescription({
   )
 }
 
+// Function AlertDialogAction: handles a specific piece of application logic.
 function AlertDialogAction({
   className,
   ...props
@@ -133,6 +143,7 @@ function AlertDialogAction({
   )
 }
 
+// Function AlertDialogCancel: handles a specific piece of application logic.
 function AlertDialogCancel({
   className,
   ...props

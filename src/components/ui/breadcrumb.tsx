@@ -7,10 +7,12 @@ import { ChevronRight, MoreHorizontal } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
+// Function Breadcrumb: handles a specific piece of application logic.
 function Breadcrumb({ ...props }: React.ComponentProps<'nav'>) {
   return <nav aria-label="breadcrumb" data-slot="breadcrumb" {...props} />
 }
 
+// Function BreadcrumbList: handles a specific piece of application logic.
 function BreadcrumbList({ className, ...props }: React.ComponentProps<'ol'>) {
   return (
     <ol
@@ -24,6 +26,7 @@ function BreadcrumbList({ className, ...props }: React.ComponentProps<'ol'>) {
   )
 }
 
+// Function BreadcrumbItem: handles a specific piece of application logic.
 function BreadcrumbItem({ className, ...props }: React.ComponentProps<'li'>) {
   return (
     <li
@@ -34,6 +37,7 @@ function BreadcrumbItem({ className, ...props }: React.ComponentProps<'li'>) {
   )
 }
 
+// Function BreadcrumbLink: handles a specific piece of application logic.
 function BreadcrumbLink({
   asChild,
   className,
@@ -52,6 +56,7 @@ function BreadcrumbLink({
   )
 }
 
+// Function BreadcrumbPage: handles a specific piece of application logic.
 function BreadcrumbPage({ className, ...props }: React.ComponentProps<'span'>) {
   return (
     <span
@@ -65,6 +70,7 @@ function BreadcrumbPage({ className, ...props }: React.ComponentProps<'span'>) {
   )
 }
 
+// Function BreadcrumbSeparator: handles a specific piece of application logic.
 function BreadcrumbSeparator({
   children,
   className,
@@ -83,6 +89,7 @@ function BreadcrumbSeparator({
   )
 }
 
+// Function BreadcrumbEllipsis: handles a specific piece of application logic.
 function BreadcrumbEllipsis({
   className,
   ...props

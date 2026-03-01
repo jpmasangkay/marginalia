@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 
+// Function InputGroup: handles a specific piece of application logic.
 function InputGroup({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -59,6 +60,7 @@ const inputGroupAddonVariants = cva(
   },
 )
 
+// Function InputGroupAddon: handles a specific piece of application logic.
 function InputGroupAddon({
   className,
   align = 'inline-start',
@@ -70,7 +72,8 @@ function InputGroupAddon({
       data-slot="input-group-addon"
       data-align={align}
       className={cn(inputGroupAddonVariants({ align }), className)}
-      onClick={(e) => {
+      onClick={      // Function: implements scoped behavior for this module.
+(e) => {
         if ((e.target as HTMLElement).closest('button')) {
           return
         }
@@ -99,6 +102,7 @@ const inputGroupButtonVariants = cva(
   },
 )
 
+// Function InputGroupButton: handles a specific piece of application logic.
 function InputGroupButton({
   className,
   type = 'button',
@@ -118,6 +122,7 @@ function InputGroupButton({
   )
 }
 
+// Function InputGroupText: handles a specific piece of application logic.
 function InputGroupText({ className, ...props }: React.ComponentProps<'span'>) {
   return (
     <span
@@ -130,6 +135,7 @@ function InputGroupText({ className, ...props }: React.ComponentProps<'span'>) {
   )
 }
 
+// Function InputGroupInput: handles a specific piece of application logic.
 function InputGroupInput({
   className,
   ...props
@@ -146,6 +152,7 @@ function InputGroupInput({
   )
 }
 
+// Function InputGroupTextarea: handles a specific piece of application logic.
 function InputGroupTextarea({
   className,
   ...props

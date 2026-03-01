@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 
+// Function FieldSet: handles a specific piece of application logic.
 function FieldSet({ className, ...props }: React.ComponentProps<'fieldset'>) {
   return (
     <fieldset
@@ -24,6 +25,7 @@ function FieldSet({ className, ...props }: React.ComponentProps<'fieldset'>) {
   )
 }
 
+// Function FieldLegend: handles a specific piece of application logic.
 function FieldLegend({
   className,
   variant = 'legend',
@@ -44,6 +46,7 @@ function FieldLegend({
   )
 }
 
+// Function FieldGroup: handles a specific piece of application logic.
 function FieldGroup({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -81,6 +84,7 @@ const fieldVariants = cva(
   },
 )
 
+// Function Field: handles a specific piece of application logic.
 function Field({
   className,
   orientation = 'vertical',
@@ -97,6 +101,7 @@ function Field({
   )
 }
 
+// Function FieldContent: handles a specific piece of application logic.
 function FieldContent({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -110,6 +115,7 @@ function FieldContent({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function FieldLabel: handles a specific piece of application logic.
 function FieldLabel({
   className,
   ...props
@@ -128,6 +134,7 @@ function FieldLabel({
   )
 }
 
+// Function FieldTitle: handles a specific piece of application logic.
 function FieldTitle({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -141,6 +148,7 @@ function FieldTitle({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function FieldDescription: handles a specific piece of application logic.
 function FieldDescription({ className, ...props }: React.ComponentProps<'p'>) {
   return (
     <p
@@ -156,6 +164,7 @@ function FieldDescription({ className, ...props }: React.ComponentProps<'p'>) {
   )
 }
 
+// Function FieldSeparator: handles a specific piece of application logic.
 function FieldSeparator({
   children,
   className,
@@ -186,6 +195,7 @@ function FieldSeparator({
   )
 }
 
+// Function FieldError: handles a specific piece of application logic.
 function FieldError({
   className,
   children,
@@ -194,7 +204,8 @@ function FieldError({
 }: React.ComponentProps<'div'> & {
   errors?: Array<{ message?: string } | undefined>
 }) {
-  const content = useMemo(() => {
+  const content = useMemo(  // Function: implements scoped behavior for this module.
+() => {
     if (children) {
       return children
     }
@@ -210,7 +221,8 @@ function FieldError({
     return (
       <ul className="ml-4 flex list-disc flex-col gap-1">
         {errors.map(
-          (error, index) =>
+                    // Function: implements scoped behavior for this module.
+(error, index) =>
             error?.message && <li key={index}>{error.message}</li>,
         )}
       </ul>

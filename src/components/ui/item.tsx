@@ -8,6 +8,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
 
+// Function ItemGroup: handles a specific piece of application logic.
 function ItemGroup({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -19,6 +20,7 @@ function ItemGroup({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function ItemSeparator: handles a specific piece of application logic.
 function ItemSeparator({
   className,
   ...props
@@ -54,6 +56,7 @@ const itemVariants = cva(
   },
 )
 
+// Function Item: handles a specific piece of application logic.
 function Item({
   className,
   variant = 'default',
@@ -91,6 +94,7 @@ const itemMediaVariants = cva(
   },
 )
 
+// Function ItemMedia: handles a specific piece of application logic.
 function ItemMedia({
   className,
   variant = 'default',
@@ -106,6 +110,7 @@ function ItemMedia({
   )
 }
 
+// Function ItemContent: handles a specific piece of application logic.
 function ItemContent({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -119,6 +124,7 @@ function ItemContent({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function ItemTitle: handles a specific piece of application logic.
 function ItemTitle({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -132,6 +138,7 @@ function ItemTitle({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function ItemDescription: handles a specific piece of application logic.
 function ItemDescription({ className, ...props }: React.ComponentProps<'p'>) {
   return (
     <p
@@ -146,6 +153,7 @@ function ItemDescription({ className, ...props }: React.ComponentProps<'p'>) {
   )
 }
 
+// Function ItemActions: handles a specific piece of application logic.
 function ItemActions({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -156,6 +164,7 @@ function ItemActions({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function ItemHeader: handles a specific piece of application logic.
 function ItemHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -169,6 +178,7 @@ function ItemHeader({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function ItemFooter: handles a specific piece of application logic.
 function ItemFooter({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div

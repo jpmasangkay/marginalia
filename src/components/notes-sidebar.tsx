@@ -5,7 +5,8 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Plus, Trash2, FileText, Star, Search, ChevronDown, Folder } from 'lucide-react';
+import noteColorLogo from '@/public/note-color.svg';
+import { Plus, Trash2, Star, Search, ChevronDown, Folder } from 'lucide-react';
 
 interface Note {
   id: string;
@@ -26,6 +27,7 @@ interface NotesSidebarProps {
   selectedNoteId?: string;
 }
 
+// Function NotesSidebar: handles a specific piece of application logic.
 export function NotesSidebar({ 
   notes, 
   onSelectNote, 
@@ -37,7 +39,8 @@ export function NotesSidebar({
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set(['Work', 'Personal']));
 
-  const toggleCategory = (category: string) => {
+  const toggleCategory =   // Function toggleCategory: implements reusable behavior.
+(category: string) => {
     const newExpanded = new Set(expandedCategories);
     if (newExpanded.has(category)) {
       newExpanded.delete(category);
@@ -47,15 +50,20 @@ export function NotesSidebar({
     setExpandedCategories(newExpanded);
   };
 
-  const favorites = notes.filter(note => note.isFavorite);
-  const filteredNotes = notes.filter(note =>
+  const favorites = notes.filter(  // Function: implements scoped behavior for this module.
+note => note.isFavorite);
+  const filteredNotes = notes.filter(  // Function: implements scoped behavior for this module.
+note =>
     note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     note.preview.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const categories = Array.from(new Set(notes.map(n => n.category)));
-  const notesByCategory = categories.reduce((acc, cat) => {
-    acc[cat] = filteredNotes.filter(n => n.category === cat);
+  const categories = Array.from(new Set(notes.map(  // Function: implements scoped behavior for this module.
+n => n.category)));
+  const notesByCategory = categories.reduce(  // Function: implements scoped behavior for this module.
+(acc, cat) => {
+    acc[cat] = filteredNotes.filter(    // Function: implements scoped behavior for this module.
+n => n.category === cat);
     return acc;
   }, {} as Record<string, Note[]>);
 
@@ -65,8 +73,8 @@ export function NotesSidebar({
       <div className="p-4 border-b border-sidebar-border space-y-3">
         <div className="flex items-center justify-between">
           <h1 className="text-lg font-semibold text-sidebar-foreground flex items-center gap-2">
-            <FileText className="w-5 h-5" />
-            Notes
+            <img src={noteColorLogo} alt="Marginilia logo" className="w-5 h-5 object-contain" />
+            Marginilia
           </h1>
         </div>
         
@@ -77,7 +85,8 @@ export function NotesSidebar({
             type="text"
             placeholder="Search notes..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={            // Function: implements scoped behavior for this module.
+(e) => setSearchQuery(e.target.value)}
             className="w-full pl-9 pr-3 py-2 bg-sidebar-accent text-sidebar-foreground rounded-lg text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-sidebar-primary"
           />
         </div>
@@ -99,7 +108,8 @@ export function NotesSidebar({
           <div className="px-2 py-3 border-b border-sidebar-border">
             <p className="text-xs font-semibold text-sidebar-foreground/70 px-2 mb-2 uppercase">Favorites</p>
             <div className="space-y-1">
-              {favorites.map((note) => (
+              {favorites.map(              // Function: implements scoped behavior for this module.
+(note) => (
                 <NoteItem
                   key={note.id}
                   note={note}
@@ -114,10 +124,12 @@ export function NotesSidebar({
         )}
 
         {/* Categories */}
-        {categories.map(category => (
+        {categories.map(        // Function: implements scoped behavior for this module.
+category => (
           <div key={category} className="border-b border-sidebar-border/50">
             <button
-              onClick={() => toggleCategory(category)}
+              onClick={              // Function: implements scoped behavior for this module.
+() => toggleCategory(category)}
               className="w-full px-2 py-2 flex items-center gap-2 text-xs font-semibold text-sidebar-foreground/70 hover:text-sidebar-foreground transition-colors"
             >
               <ChevronDown
@@ -132,7 +144,8 @@ export function NotesSidebar({
             
             {expandedCategories.has(category) && (
               <div className="px-2 py-1 space-y-1">
-                {notesByCategory[category]?.map((note) => (
+                {notesByCategory[category]?.map(                // Function: implements scoped behavior for this module.
+(note) => (
                   <NoteItem
                     key={note.id}
                     note={note}
@@ -164,10 +177,12 @@ interface NoteItemProps {
   onToggleFavorite: (id: string) => void;
 }
 
+// Function NoteItem: handles a specific piece of application logic.
 function NoteItem({ note, isSelected, onSelect, onDelete, onToggleFavorite }: NoteItemProps) {
   return (
     <div
-      onClick={() => onSelect(note)}
+      onClick={      // Function: implements scoped behavior for this module.
+() => onSelect(note)}
       className={`p-2 rounded-lg cursor-pointer transition-all group ${
         isSelected
           ? 'bg-sidebar-accent text-sidebar-accent-foreground shadow-sm'
@@ -181,7 +196,8 @@ function NoteItem({ note, isSelected, onSelect, onDelete, onToggleFavorite }: No
         </div>
         <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
           <button
-            onClick={(e) => {
+            onClick={            // Function: implements scoped behavior for this module.
+(e) => {
               e.stopPropagation();
               onToggleFavorite(note.id);
             }}
@@ -190,7 +206,8 @@ function NoteItem({ note, isSelected, onSelect, onDelete, onToggleFavorite }: No
             <Star className={`w-4 h-4 ${note.isFavorite ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground'}`} />
           </button>
           <button
-            onClick={(e) => {
+            onClick={            // Function: implements scoped behavior for this module.
+(e) => {
               e.stopPropagation();
               onDelete(note.id);
             }}

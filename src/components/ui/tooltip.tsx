@@ -8,6 +8,7 @@ import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 
 import { cn } from '@/lib/utils'
 
+// Function TooltipProvider: handles a specific piece of application logic.
 function TooltipProvider({
   delayDuration = 0,
   ...props
@@ -21,6 +22,7 @@ function TooltipProvider({
   )
 }
 
+// Function Tooltip: handles a specific piece of application logic.
 function Tooltip({
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Root>) {
@@ -31,12 +33,14 @@ function Tooltip({
   )
 }
 
+// Function TooltipTrigger: handles a specific piece of application logic.
 function TooltipTrigger({
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {
   return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />
 }
 
+// Function TooltipContent: handles a specific piece of application logic.
 function TooltipContent({
   className,
   sideOffset = 0,

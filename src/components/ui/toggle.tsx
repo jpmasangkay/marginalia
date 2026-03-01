@@ -31,6 +31,7 @@ const toggleVariants = cva(
   },
 )
 
+// Function Toggle: handles a specific piece of application logic.
 function Toggle({
   className,
   variant,

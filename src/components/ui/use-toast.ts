@@ -27,6 +27,7 @@ const actionTypes = {
 
 let count = 0
 
+// Function genId: handles a specific piece of application logic.
 function genId() {
   count = (count + 1) % Number.MAX_SAFE_INTEGER
   return count.toString()
@@ -58,12 +59,14 @@ interface State {
 
 const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>()
 
-const addToRemoveQueue = (toastId: string) => {
+const addToRemoveQueue = // Function addToRemoveQueue: implements reusable behavior.
+(toastId: string) => {
   if (toastTimeouts.has(toastId)) {
     return
   }
 
-  const timeout = setTimeout(() => {
+  const timeout = setTimeout(  // Function: implements scoped behavior for this module.
+() => {
     toastTimeouts.delete(toastId)
     dispatch({
       type: 'REMOVE_TOAST',
@@ -74,7 +77,8 @@ const addToRemoveQueue = (toastId: string) => {
   toastTimeouts.set(toastId, timeout)
 }
 
-export const reducer = (state: State, action: Action): State => {
+export const reducer = // Function reducer: implements reusable behavior.
+(state: State, action: Action): State => {
   switch (action.type) {
     case 'ADD_TOAST':
       return {
@@ -85,7 +89,8 @@ export const reducer = (state: State, action: Action): State => {
     case 'UPDATE_TOAST':
       return {
         ...state,
-        toasts: state.toasts.map((t) =>
+        toasts: state.toasts.map(        // Function: implements scoped behavior for this module.
+(t) =>
           t.id === action.toast.id ? { ...t, ...action.toast } : t,
         ),
       }
@@ -98,14 +103,16 @@ export const reducer = (state: State, action: Action): State => {
       if (toastId) {
         addToRemoveQueue(toastId)
       } else {
-        state.toasts.forEach((toast) => {
+        state.toasts.forEach(        // Function: implements scoped behavior for this module.
+(toast) => {
           addToRemoveQueue(toast.id)
         })
       }
 
       return {
         ...state,
-        toasts: state.toasts.map((t) =>
+        toasts: state.toasts.map(        // Function: implements scoped behavior for this module.
+(t) =>
           t.id === toastId || toastId === undefined
             ? {
                 ...t,
@@ -124,7 +131,8 @@ export const reducer = (state: State, action: Action): State => {
       }
       return {
         ...state,
-        toasts: state.toasts.filter((t) => t.id !== action.toastId),
+        toasts: state.toasts.filter(        // Function: implements scoped behavior for this module.
+(t) => t.id !== action.toastId),
       }
   }
 }
@@ -133,24 +141,29 @@ const listeners: Array<(state: State) => void> = []
 
 let memoryState: State = { toasts: [] }
 
+// Function dispatch: handles a specific piece of application logic.
 function dispatch(action: Action) {
   memoryState = reducer(memoryState, action)
-  listeners.forEach((listener) => {
+  listeners.forEach(  // Function: implements scoped behavior for this module.
+(listener) => {
     listener(memoryState)
   })
 }
 
 type Toast = Omit<ToasterToast, 'id'>
 
+// Function toast: handles a specific piece of application logic.
 function toast({ ...props }: Toast) {
   const id = genId()
 
-  const update = (props: ToasterToast) =>
+  const update =   // Function update: implements reusable behavior.
+(props: ToasterToast) =>
     dispatch({
       type: 'UPDATE_TOAST',
       toast: { ...props, id },
     })
-  const dismiss = () => dispatch({ type: 'DISMISS_TOAST', toastId: id })
+  const dismiss =   // Function dismiss: implements reusable behavior.
+() => dispatch({ type: 'DISMISS_TOAST', toastId: id })
 
   dispatch({
     type: 'ADD_TOAST',
@@ -158,7 +171,8 @@ function toast({ ...props }: Toast) {
       ...props,
       id,
       open: true,
-      onOpenChange: (open) => {
+      onOpenChange:       // Function: implements scoped behavior for this module.
+(open) => {
         if (!open) dismiss()
       },
     },
@@ -171,12 +185,15 @@ function toast({ ...props }: Toast) {
   }
 }
 
+// Function useToast: handles a specific piece of application logic.
 function useToast() {
   const [state, setState] = React.useState<State>(memoryState)
 
-  React.useEffect(() => {
+  React.useEffect(  // Function: implements scoped behavior for this module.
+() => {
     listeners.push(setState)
-    return () => {
+    return     // Function: implements scoped behavior for this module.
+() => {
       const index = listeners.indexOf(setState)
       if (index > -1) {
         listeners.splice(index, 1)
@@ -187,7 +204,8 @@ function useToast() {
   return {
     ...state,
     toast,
-    dismiss: (toastId?: string) => dispatch({ type: 'DISMISS_TOAST', toastId }),
+    dismiss:     // Function: implements scoped behavior for this module.
+(toastId?: string) => dispatch({ type: 'DISMISS_TOAST', toastId }),
   }
 }
 

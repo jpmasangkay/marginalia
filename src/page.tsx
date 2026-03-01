@@ -17,12 +17,14 @@ interface Note {
   createdAt: string;
 }
 
+// Function NotesApp: handles a specific piece of application logic.
 export default function NotesApp() {
   const [notes, setNotes] = useState<Note[]>([]);
 
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
 
-  const handleCreateNote = () => {
+  const handleCreateNote =   // Function handleCreateNote: implements reusable behavior.
+() => {
     const newNote: Note = {
       id: Date.now().toString(),
       title: 'Untitled Note',
@@ -36,44 +38,55 @@ export default function NotesApp() {
     setSelectedNote(newNote);
   };
 
-  const handleDeleteNote = (id: string) => {
-    const filtered = notes.filter(note => note.id !== id);
+  const handleDeleteNote =   // Function handleDeleteNote: implements reusable behavior.
+(id: string) => {
+    const filtered = notes.filter(    // Function: implements scoped behavior for this module.
+note => note.id !== id);
     setNotes(filtered);
     if (selectedNote?.id === id) {
       setSelectedNote(filtered[0] ?? null);
     }
   };
 
-  const handleToggleFavorite = (id: string) => {
-    setNotes(notes.map(note =>
+  const handleToggleFavorite =   // Function handleToggleFavorite: implements reusable behavior.
+(id: string) => {
+    setNotes(notes.map(    // Function: implements scoped behavior for this module.
+note =>
       note.id === id ? { ...note, isFavorite: !note.isFavorite } : note
     ));
   };
 
-  const handleSelectNote = (note: Note) => {
+  const handleSelectNote =   // Function handleSelectNote: implements reusable behavior.
+(note: Note) => {
     setSelectedNote(note);
   };
 
-  const handleTitleChange = (title: string) => {
+  const handleTitleChange =   // Function handleTitleChange: implements reusable behavior.
+(title: string) => {
     if (!selectedNote) return;
     const updated = { ...selectedNote, title, preview: title };
     setSelectedNote(updated);
-    setNotes(notes.map(n => n.id === updated.id ? updated : n));
+    setNotes(notes.map(    // Function: implements scoped behavior for this module.
+n => n.id === updated.id ? updated : n));
   };
 
-  const handleContentChange = (content: string) => {
+  const handleContentChange =   // Function handleContentChange: implements reusable behavior.
+(content: string) => {
     if (!selectedNote) return;
     const preview = content.substring(0, 100) + (content.length > 100 ? '...' : '');
     const updated = { ...selectedNote, preview };
     setSelectedNote(updated);
-    setNotes(notes.map(n => n.id === updated.id ? updated : n));
+    setNotes(notes.map(    // Function: implements scoped behavior for this module.
+n => n.id === updated.id ? updated : n));
   };
 
-  const handleCategoryChange = (category: string) => {
+  const handleCategoryChange =   // Function handleCategoryChange: implements reusable behavior.
+(category: string) => {
     if (!selectedNote) return;
     const updated = { ...selectedNote, category };
     setSelectedNote(updated);
-    setNotes(notes.map(n => n.id === updated.id ? updated : n));
+    setNotes(notes.map(    // Function: implements scoped behavior for this module.
+n => n.id === updated.id ? updated : n));
   };
 
   return (

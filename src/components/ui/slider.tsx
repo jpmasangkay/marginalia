@@ -8,6 +8,7 @@ import * as SliderPrimitive from '@radix-ui/react-slider'
 
 import { cn } from '@/lib/utils'
 
+// Function Slider: handles a specific piece of application logic.
 function Slider({
   className,
   defaultValue,
@@ -17,7 +18,8 @@ function Slider({
   ...props
 }: React.ComponentProps<typeof SliderPrimitive.Root>) {
   const _values = React.useMemo(
-    () =>
+        // Function: implements scoped behavior for this module.
+() =>
       Array.isArray(value)
         ? value
         : Array.isArray(defaultValue)
@@ -52,7 +54,8 @@ function Slider({
           }
         />
       </SliderPrimitive.Track>
-      {Array.from({ length: _values.length }, (_, index) => (
+      {Array.from({ length: _values.length },       // Function: implements scoped behavior for this module.
+(_, index) => (
         <SliderPrimitive.Thumb
           data-slot="slider-thumb"
           key={index}

@@ -24,33 +24,44 @@ interface NotesEditorProps {
   onCategoryChange: (category: string) => void;
 }
 
+// Function NotesEditor: handles a specific piece of application logic.
 export function NotesEditor({ note, onTitleChange, onContentChange, onCategoryChange }: NotesEditorProps) {
   const [content, setContent] = useState('');
   const [isSharing, setIsSharing] = useState(false);
   const [tasks, setTasks] = useState<{id: string, text: string, completed: boolean}[]>([]);
 
-  const handleShare = () => {
+  const handleShare =   // Function handleShare: implements reusable behavior.
+() => {
     setIsSharing(true);
-    setTimeout(() => setIsSharing(false), 2000);
+    setTimeout(    // Function: implements scoped behavior for this module.
+() => setIsSharing(false), 2000);
   };
 
-  const toggleTask = (id: string) => {
-    setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
+  const toggleTask =   // Function toggleTask: implements reusable behavior.
+(id: string) => {
+    setTasks(tasks.map(    // Function: implements scoped behavior for this module.
+t => t.id === id ? { ...t, completed: !t.completed } : t));
   };
 
-  const addTask = () => {
+  const addTask =   // Function addTask: implements reusable behavior.
+() => {
     setTasks([...tasks, { id: Date.now().toString(), text: '', completed: false }]);
   };
 
-  const updateTask = (id: string, text: string) => {
-    setTasks(tasks.map(t => t.id === id ? { ...t, text } : t));
+  const updateTask =   // Function updateTask: implements reusable behavior.
+(id: string, text: string) => {
+    setTasks(tasks.map(    // Function: implements scoped behavior for this module.
+t => t.id === id ? { ...t, text } : t));
   };
 
-  const deleteTask = (id: string) => {
-    setTasks(tasks.filter(t => t.id !== id));
+  const deleteTask =   // Function deleteTask: implements reusable behavior.
+(id: string) => {
+    setTasks(tasks.filter(    // Function: implements scoped behavior for this module.
+t => t.id !== id));
   };
 
-  const completedCount = tasks.filter(t => t.completed).length;
+  const completedCount = tasks.filter(  // Function: implements scoped behavior for this module.
+t => t.completed).length;
   const progressPercentage = tasks.length > 0 ? Math.round((completedCount / tasks.length) * 100) : 0;
 
   const categories = ['Work', 'Personal', 'Ideas', 'Learning'];
@@ -64,7 +75,8 @@ export function NotesEditor({ note, onTitleChange, onContentChange, onCategoryCh
             <input
               type="text"
               defaultValue={note.title}
-              onChange={(e) => onTitleChange(e.target.value)}
+              onChange={              // Function: implements scoped behavior for this module.
+(e) => onTitleChange(e.target.value)}
               className="text-2xl font-bold bg-transparent border-0 focus:outline-none focus:ring-0 w-full text-foreground placeholder-muted-foreground"
               placeholder="Note title"
             />
@@ -95,10 +107,12 @@ export function NotesEditor({ note, onTitleChange, onContentChange, onCategoryCh
             <span className="text-muted-foreground">Category: </span>
             <select
               value={note.category}
-              onChange={(e) => onCategoryChange(e.target.value)}
+              onChange={              // Function: implements scoped behavior for this module.
+(e) => onCategoryChange(e.target.value)}
               className="bg-transparent border border-border rounded px-2 py-1 text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
             >
-              {categories.map(cat => (
+              {categories.map(              // Function: implements scoped behavior for this module.
+cat => (
                 <option key={cat} value={cat}>{cat}</option>
               ))}
             </select>
@@ -140,7 +154,8 @@ export function NotesEditor({ note, onTitleChange, onContentChange, onCategoryCh
         <div className="flex-1 flex flex-col min-w-0">
           <textarea
             value={content}
-            onChange={(e) => {
+            onChange={            // Function: implements scoped behavior for this module.
+(e) => {
               setContent(e.target.value);
               onContentChange(e.target.value);
             }}
@@ -169,10 +184,12 @@ export function NotesEditor({ note, onTitleChange, onContentChange, onCategoryCh
 
           <div className="flex-1 overflow-y-auto space-y-2 mb-4">
             <h4 className="text-sm font-medium text-foreground">Tasks</h4>
-            {tasks.map(task => (
+            {tasks.map(            // Function: implements scoped behavior for this module.
+task => (
               <div key={task.id} className="flex items-start gap-2 group">
                 <button
-                  onClick={() => toggleTask(task.id)}
+                  onClick={                  // Function: implements scoped behavior for this module.
+() => toggleTask(task.id)}
                   className="mt-1 flex-shrink-0"
                 >
                   {task.completed ? (
@@ -184,12 +201,14 @@ export function NotesEditor({ note, onTitleChange, onContentChange, onCategoryCh
                 <input
                   type="text"
                   value={task.text}
-                  onChange={(e) => updateTask(task.id, e.target.value)}
+                  onChange={                  // Function: implements scoped behavior for this module.
+(e) => updateTask(task.id, e.target.value)}
                   className="flex-1 bg-transparent text-sm text-foreground focus:outline-none border-b border-transparent hover:border-border focus:border-primary transition-colors"
                   placeholder="Add task..."
                 />
                 <button
-                  onClick={() => deleteTask(task.id)}
+                  onClick={                  // Function: implements scoped behavior for this module.
+() => deleteTask(task.id)}
                   className="opacity-0 group-hover:opacity-100 text-destructive text-sm hover:underline"
                 >
                   Ã—

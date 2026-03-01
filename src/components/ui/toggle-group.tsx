@@ -17,6 +17,7 @@ const ToggleGroupContext = React.createContext<
   variant: 'default',
 })
 
+// Function ToggleGroup: handles a specific piece of application logic.
 function ToggleGroup({
   className,
   variant,
@@ -43,6 +44,7 @@ function ToggleGroup({
   )
 }
 
+// Function ToggleGroupItem: handles a specific piece of application logic.
 function ToggleGroupItem({
   className,
   children,

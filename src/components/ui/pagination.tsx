@@ -11,6 +11,7 @@ import {
 import { cn } from '@/lib/utils'
 import { Button, buttonVariants } from '@/components/ui/button'
 
+// Function Pagination: handles a specific piece of application logic.
 function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {
   return (
     <nav
@@ -23,6 +24,7 @@ function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {
   )
 }
 
+// Function PaginationContent: handles a specific piece of application logic.
 function PaginationContent({
   className,
   ...props
@@ -36,6 +38,7 @@ function PaginationContent({
   )
 }
 
+// Function PaginationItem: handles a specific piece of application logic.
 function PaginationItem({ ...props }: React.ComponentProps<'li'>) {
   return <li data-slot="pagination-item" {...props} />
 }
@@ -45,6 +48,7 @@ type PaginationLinkProps = {
 } & Pick<React.ComponentProps<typeof Button>, 'size'> &
   React.ComponentProps<'a'>
 
+// Function PaginationLink: handles a specific piece of application logic.
 function PaginationLink({
   className,
   isActive,
@@ -68,6 +72,7 @@ function PaginationLink({
   )
 }
 
+// Function PaginationPrevious: handles a specific piece of application logic.
 function PaginationPrevious({
   className,
   ...props
@@ -85,6 +90,7 @@ function PaginationPrevious({
   )
 }
 
+// Function PaginationNext: handles a specific piece of application logic.
 function PaginationNext({
   className,
   ...props
@@ -102,6 +108,7 @@ function PaginationNext({
   )
 }
 
+// Function PaginationEllipsis: handles a specific piece of application logic.
 function PaginationEllipsis({
   className,
   ...props

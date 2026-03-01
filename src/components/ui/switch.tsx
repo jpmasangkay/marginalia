@@ -8,6 +8,7 @@ import * as SwitchPrimitive from '@radix-ui/react-switch'
 
 import { cn } from '@/lib/utils'
 
+// Function Switch: handles a specific piece of application logic.
 function Switch({
   className,
   ...props

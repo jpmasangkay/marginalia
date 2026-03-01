@@ -8,6 +8,7 @@ import {
   type ThemeProviderProps,
 } from 'next-themes'
 
+// Function ThemeProvider: handles a specific piece of application logic.
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   return <NextThemesProvider {...props}>{children}</NextThemesProvider>
 }

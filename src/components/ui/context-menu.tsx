@@ -9,12 +9,14 @@ import { CheckIcon, ChevronRightIcon, CircleIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
+// Function ContextMenu: handles a specific piece of application logic.
 function ContextMenu({
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.Root>) {
   return <ContextMenuPrimitive.Root data-slot="context-menu" {...props} />
 }
 
+// Function ContextMenuTrigger: handles a specific piece of application logic.
 function ContextMenuTrigger({
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.Trigger>) {
@@ -23,6 +25,7 @@ function ContextMenuTrigger({
   )
 }
 
+// Function ContextMenuGroup: handles a specific piece of application logic.
 function ContextMenuGroup({
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.Group>) {
@@ -31,6 +34,7 @@ function ContextMenuGroup({
   )
 }
 
+// Function ContextMenuPortal: handles a specific piece of application logic.
 function ContextMenuPortal({
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.Portal>) {
@@ -39,12 +43,14 @@ function ContextMenuPortal({
   )
 }
 
+// Function ContextMenuSub: handles a specific piece of application logic.
 function ContextMenuSub({
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.Sub>) {
   return <ContextMenuPrimitive.Sub data-slot="context-menu-sub" {...props} />
 }
 
+// Function ContextMenuRadioGroup: handles a specific piece of application logic.
 function ContextMenuRadioGroup({
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.RadioGroup>) {
@@ -56,6 +62,7 @@ function ContextMenuRadioGroup({
   )
 }
 
+// Function ContextMenuSubTrigger: handles a specific piece of application logic.
 function ContextMenuSubTrigger({
   className,
   inset,
@@ -80,6 +87,7 @@ function ContextMenuSubTrigger({
   )
 }
 
+// Function ContextMenuSubContent: handles a specific piece of application logic.
 function ContextMenuSubContent({
   className,
   ...props
@@ -96,6 +104,7 @@ function ContextMenuSubContent({
   )
 }
 
+// Function ContextMenuContent: handles a specific piece of application logic.
 function ContextMenuContent({
   className,
   ...props
@@ -114,6 +123,7 @@ function ContextMenuContent({
   )
 }
 
+// Function ContextMenuItem: handles a specific piece of application logic.
 function ContextMenuItem({
   className,
   inset,
@@ -137,6 +147,7 @@ function ContextMenuItem({
   )
 }
 
+// Function ContextMenuCheckboxItem: handles a specific piece of application logic.
 function ContextMenuCheckboxItem({
   className,
   children,
@@ -163,6 +174,7 @@ function ContextMenuCheckboxItem({
   )
 }
 
+// Function ContextMenuRadioItem: handles a specific piece of application logic.
 function ContextMenuRadioItem({
   className,
   children,
@@ -187,6 +199,7 @@ function ContextMenuRadioItem({
   )
 }
 
+// Function ContextMenuLabel: handles a specific piece of application logic.
 function ContextMenuLabel({
   className,
   inset,
@@ -207,6 +220,7 @@ function ContextMenuLabel({
   )
 }
 
+// Function ContextMenuSeparator: handles a specific piece of application logic.
 function ContextMenuSeparator({
   className,
   ...props
@@ -220,6 +234,7 @@ function ContextMenuSeparator({
   )
 }
 
+// Function ContextMenuShortcut: handles a specific piece of application logic.
 function ContextMenuShortcut({
   className,
   ...props

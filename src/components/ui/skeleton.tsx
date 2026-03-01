@@ -3,6 +3,7 @@
  */
 import { cn } from '@/lib/utils'
 
+// Function Skeleton: handles a specific piece of application logic.
 function Skeleton({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div

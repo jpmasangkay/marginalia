@@ -7,6 +7,7 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
+// Function Table: handles a specific piece of application logic.
 function Table({ className, ...props }: React.ComponentProps<'table'>) {
   return (
     <div
@@ -22,6 +23,7 @@ function Table({ className, ...props }: React.ComponentProps<'table'>) {
   )
 }
 
+// Function TableHeader: handles a specific piece of application logic.
 function TableHeader({ className, ...props }: React.ComponentProps<'thead'>) {
   return (
     <thead
@@ -32,6 +34,7 @@ function TableHeader({ className, ...props }: React.ComponentProps<'thead'>) {
   )
 }
 
+// Function TableBody: handles a specific piece of application logic.
 function TableBody({ className, ...props }: React.ComponentProps<'tbody'>) {
   return (
     <tbody
@@ -42,6 +45,7 @@ function TableBody({ className, ...props }: React.ComponentProps<'tbody'>) {
   )
 }
 
+// Function TableFooter: handles a specific piece of application logic.
 function TableFooter({ className, ...props }: React.ComponentProps<'tfoot'>) {
   return (
     <tfoot
@@ -55,6 +59,7 @@ function TableFooter({ className, ...props }: React.ComponentProps<'tfoot'>) {
   )
 }
 
+// Function TableRow: handles a specific piece of application logic.
 function TableRow({ className, ...props }: React.ComponentProps<'tr'>) {
   return (
     <tr
@@ -68,6 +73,7 @@ function TableRow({ className, ...props }: React.ComponentProps<'tr'>) {
   )
 }
 
+// Function TableHead: handles a specific piece of application logic.
 function TableHead({ className, ...props }: React.ComponentProps<'th'>) {
   return (
     <th
@@ -81,6 +87,7 @@ function TableHead({ className, ...props }: React.ComponentProps<'th'>) {
   )
 }
 
+// Function TableCell: handles a specific piece of application logic.
 function TableCell({ className, ...props }: React.ComponentProps<'td'>) {
   return (
     <td
@@ -94,6 +101,7 @@ function TableCell({ className, ...props }: React.ComponentProps<'td'>) {
   )
 }
 
+// Function TableCaption: handles a specific piece of application logic.
 function TableCaption({
   className,
   ...props

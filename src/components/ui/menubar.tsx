@@ -9,6 +9,7 @@ import { CheckIcon, ChevronRightIcon, CircleIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
+// Function Menubar: handles a specific piece of application logic.
 function Menubar({
   className,
   ...props
@@ -25,24 +26,28 @@ function Menubar({
   )
 }
 
+// Function MenubarMenu: handles a specific piece of application logic.
 function MenubarMenu({
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.Menu>) {
   return <MenubarPrimitive.Menu data-slot="menubar-menu" {...props} />
 }
 
+// Function MenubarGroup: handles a specific piece of application logic.
 function MenubarGroup({
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.Group>) {
   return <MenubarPrimitive.Group data-slot="menubar-group" {...props} />
 }
 
+// Function MenubarPortal: handles a specific piece of application logic.
 function MenubarPortal({
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.Portal>) {
   return <MenubarPrimitive.Portal data-slot="menubar-portal" {...props} />
 }
 
+// Function MenubarRadioGroup: handles a specific piece of application logic.
 function MenubarRadioGroup({
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.RadioGroup>) {
@@ -51,6 +56,7 @@ function MenubarRadioGroup({
   )
 }
 
+// Function MenubarTrigger: handles a specific piece of application logic.
 function MenubarTrigger({
   className,
   ...props
@@ -67,6 +73,7 @@ function MenubarTrigger({
   )
 }
 
+// Function MenubarContent: handles a specific piece of application logic.
 function MenubarContent({
   className,
   align = 'start',
@@ -91,6 +98,7 @@ function MenubarContent({
   )
 }
 
+// Function MenubarItem: handles a specific piece of application logic.
 function MenubarItem({
   className,
   inset,
@@ -114,6 +122,7 @@ function MenubarItem({
   )
 }
 
+// Function MenubarCheckboxItem: handles a specific piece of application logic.
 function MenubarCheckboxItem({
   className,
   children,
@@ -140,6 +149,7 @@ function MenubarCheckboxItem({
   )
 }
 
+// Function MenubarRadioItem: handles a specific piece of application logic.
 function MenubarRadioItem({
   className,
   children,
@@ -164,6 +174,7 @@ function MenubarRadioItem({
   )
 }
 
+// Function MenubarLabel: handles a specific piece of application logic.
 function MenubarLabel({
   className,
   inset,
@@ -184,6 +195,7 @@ function MenubarLabel({
   )
 }
 
+// Function MenubarSeparator: handles a specific piece of application logic.
 function MenubarSeparator({
   className,
   ...props
@@ -197,6 +209,7 @@ function MenubarSeparator({
   )
 }
 
+// Function MenubarShortcut: handles a specific piece of application logic.
 function MenubarShortcut({
   className,
   ...props
@@ -213,12 +226,14 @@ function MenubarShortcut({
   )
 }
 
+// Function MenubarSub: handles a specific piece of application logic.
 function MenubarSub({
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.Sub>) {
   return <MenubarPrimitive.Sub data-slot="menubar-sub" {...props} />
 }
 
+// Function MenubarSubTrigger: handles a specific piece of application logic.
 function MenubarSubTrigger({
   className,
   inset,
@@ -243,6 +258,7 @@ function MenubarSubTrigger({
   )
 }
 
+// Function MenubarSubContent: handles a specific piece of application logic.
 function MenubarSubContent({
   className,
   ...props

@@ -8,6 +8,7 @@ import { ChevronDownIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
+// Function NavigationMenu: handles a specific piece of application logic.
 function NavigationMenu({
   className,
   children,
@@ -32,6 +33,7 @@ function NavigationMenu({
   )
 }
 
+// Function NavigationMenuList: handles a specific piece of application logic.
 function NavigationMenuList({
   className,
   ...props
@@ -48,6 +50,7 @@ function NavigationMenuList({
   )
 }
 
+// Function NavigationMenuItem: handles a specific piece of application logic.
 function NavigationMenuItem({
   className,
   ...props
@@ -65,6 +68,7 @@ const navigationMenuTriggerStyle = cva(
   'group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[state=open]:hover:bg-accent data-[state=open]:text-accent-foreground data-[state=open]:focus:bg-accent data-[state=open]:bg-accent/50 focus-visible:ring-ring/50 outline-none transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1',
 )
 
+// Function NavigationMenuTrigger: handles a specific piece of application logic.
 function NavigationMenuTrigger({
   className,
   children,
@@ -85,6 +89,7 @@ function NavigationMenuTrigger({
   )
 }
 
+// Function NavigationMenuContent: handles a specific piece of application logic.
 function NavigationMenuContent({
   className,
   ...props
@@ -102,6 +107,7 @@ function NavigationMenuContent({
   )
 }
 
+// Function NavigationMenuViewport: handles a specific piece of application logic.
 function NavigationMenuViewport({
   className,
   ...props
@@ -122,6 +128,7 @@ function NavigationMenuViewport({
   )
 }
 
+// Function NavigationMenuLink: handles a specific piece of application logic.
 function NavigationMenuLink({
   className,
   ...props
@@ -138,6 +145,7 @@ function NavigationMenuLink({
   )
 }
 
+// Function NavigationMenuIndicator: handles a specific piece of application logic.
 function NavigationMenuIndicator({
   className,
   ...props

@@ -8,30 +8,35 @@ import { Drawer as DrawerPrimitive } from 'vaul'
 
 import { cn } from '@/lib/utils'
 
+// Function Drawer: handles a specific piece of application logic.
 function Drawer({
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Root>) {
   return <DrawerPrimitive.Root data-slot="drawer" {...props} />
 }
 
+// Function DrawerTrigger: handles a specific piece of application logic.
 function DrawerTrigger({
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Trigger>) {
   return <DrawerPrimitive.Trigger data-slot="drawer-trigger" {...props} />
 }
 
+// Function DrawerPortal: handles a specific piece of application logic.
 function DrawerPortal({
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Portal>) {
   return <DrawerPrimitive.Portal data-slot="drawer-portal" {...props} />
 }
 
+// Function DrawerClose: handles a specific piece of application logic.
 function DrawerClose({
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Close>) {
   return <DrawerPrimitive.Close data-slot="drawer-close" {...props} />
 }
 
+// Function DrawerOverlay: handles a specific piece of application logic.
 function DrawerOverlay({
   className,
   ...props
@@ -48,6 +53,7 @@ function DrawerOverlay({
   )
 }
 
+// Function DrawerContent: handles a specific piece of application logic.
 function DrawerContent({
   className,
   children,
@@ -75,6 +81,7 @@ function DrawerContent({
   )
 }
 
+// Function DrawerHeader: handles a specific piece of application logic.
 function DrawerHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -88,6 +95,7 @@ function DrawerHeader({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function DrawerFooter: handles a specific piece of application logic.
 function DrawerFooter({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -98,6 +106,7 @@ function DrawerFooter({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function DrawerTitle: handles a specific piece of application logic.
 function DrawerTitle({
   className,
   ...props
@@ -111,6 +120,7 @@ function DrawerTitle({
   )
 }
 
+// Function DrawerDescription: handles a specific piece of application logic.
 function DrawerDescription({
   className,
   ...props

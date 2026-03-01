@@ -9,28 +9,33 @@ import { XIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
+// Function Sheet: handles a specific piece of application logic.
 function Sheet({ ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />
 }
 
+// Function SheetTrigger: handles a specific piece of application logic.
 function SheetTrigger({
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Trigger>) {
   return <SheetPrimitive.Trigger data-slot="sheet-trigger" {...props} />
 }
 
+// Function SheetClose: handles a specific piece of application logic.
 function SheetClose({
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Close>) {
   return <SheetPrimitive.Close data-slot="sheet-close" {...props} />
 }
 
+// Function SheetPortal: handles a specific piece of application logic.
 function SheetPortal({
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Portal>) {
   return <SheetPrimitive.Portal data-slot="sheet-portal" {...props} />
 }
 
+// Function SheetOverlay: handles a specific piece of application logic.
 function SheetOverlay({
   className,
   ...props
@@ -47,6 +52,7 @@ function SheetOverlay({
   )
 }
 
+// Function SheetContent: handles a specific piece of application logic.
 function SheetContent({
   className,
   children,
@@ -84,6 +90,7 @@ function SheetContent({
   )
 }
 
+// Function SheetHeader: handles a specific piece of application logic.
 function SheetHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -94,6 +101,7 @@ function SheetHeader({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function SheetFooter: handles a specific piece of application logic.
 function SheetFooter({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -104,6 +112,7 @@ function SheetFooter({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function SheetTitle: handles a specific piece of application logic.
 function SheetTitle({
   className,
   ...props
@@ -117,6 +126,7 @@ function SheetTitle({
   )
 }
 
+// Function SheetDescription: handles a specific piece of application logic.
 function SheetDescription({
   className,
   ...props

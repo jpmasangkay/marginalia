@@ -9,12 +9,14 @@ import { CheckIcon, ChevronRightIcon, CircleIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
+// Function DropdownMenu: handles a specific piece of application logic.
 function DropdownMenu({
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Root>) {
   return <DropdownMenuPrimitive.Root data-slot="dropdown-menu" {...props} />
 }
 
+// Function DropdownMenuPortal: handles a specific piece of application logic.
 function DropdownMenuPortal({
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Portal>) {
@@ -23,6 +25,7 @@ function DropdownMenuPortal({
   )
 }
 
+// Function DropdownMenuTrigger: handles a specific piece of application logic.
 function DropdownMenuTrigger({
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Trigger>) {
@@ -34,6 +37,7 @@ function DropdownMenuTrigger({
   )
 }
 
+// Function DropdownMenuContent: handles a specific piece of application logic.
 function DropdownMenuContent({
   className,
   sideOffset = 4,
@@ -54,6 +58,7 @@ function DropdownMenuContent({
   )
 }
 
+// Function DropdownMenuGroup: handles a specific piece of application logic.
 function DropdownMenuGroup({
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Group>) {
@@ -62,6 +67,7 @@ function DropdownMenuGroup({
   )
 }
 
+// Function DropdownMenuItem: handles a specific piece of application logic.
 function DropdownMenuItem({
   className,
   inset,
@@ -85,6 +91,7 @@ function DropdownMenuItem({
   )
 }
 
+// Function DropdownMenuCheckboxItem: handles a specific piece of application logic.
 function DropdownMenuCheckboxItem({
   className,
   children,
@@ -111,6 +118,7 @@ function DropdownMenuCheckboxItem({
   )
 }
 
+// Function DropdownMenuRadioGroup: handles a specific piece of application logic.
 function DropdownMenuRadioGroup({
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.RadioGroup>) {
@@ -122,6 +130,7 @@ function DropdownMenuRadioGroup({
   )
 }
 
+// Function DropdownMenuRadioItem: handles a specific piece of application logic.
 function DropdownMenuRadioItem({
   className,
   children,
@@ -146,6 +155,7 @@ function DropdownMenuRadioItem({
   )
 }
 
+// Function DropdownMenuLabel: handles a specific piece of application logic.
 function DropdownMenuLabel({
   className,
   inset,
@@ -166,6 +176,7 @@ function DropdownMenuLabel({
   )
 }
 
+// Function DropdownMenuSeparator: handles a specific piece of application logic.
 function DropdownMenuSeparator({
   className,
   ...props
@@ -179,6 +190,7 @@ function DropdownMenuSeparator({
   )
 }
 
+// Function DropdownMenuShortcut: handles a specific piece of application logic.
 function DropdownMenuShortcut({
   className,
   ...props
@@ -195,12 +207,14 @@ function DropdownMenuShortcut({
   )
 }
 
+// Function DropdownMenuSub: handles a specific piece of application logic.
 function DropdownMenuSub({
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Sub>) {
   return <DropdownMenuPrimitive.Sub data-slot="dropdown-menu-sub" {...props} />
 }
 
+// Function DropdownMenuSubTrigger: handles a specific piece of application logic.
 function DropdownMenuSubTrigger({
   className,
   inset,
@@ -225,6 +239,7 @@ function DropdownMenuSubTrigger({
   )
 }
 
+// Function DropdownMenuSubContent: handles a specific piece of application logic.
 function DropdownMenuSubContent({
   className,
   ...props

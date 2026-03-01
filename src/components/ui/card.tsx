@@ -5,6 +5,7 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
+// Function Card: handles a specific piece of application logic.
 function Card({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -18,6 +19,7 @@ function Card({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function CardHeader: handles a specific piece of application logic.
 function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -31,6 +33,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function CardTitle: handles a specific piece of application logic.
 function CardTitle({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -41,6 +44,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function CardDescription: handles a specific piece of application logic.
 function CardDescription({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -51,6 +55,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function CardAction: handles a specific piece of application logic.
 function CardAction({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -64,6 +69,7 @@ function CardAction({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function CardContent: handles a specific piece of application logic.
 function CardContent({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -74,6 +80,7 @@ function CardContent({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function CardFooter: handles a specific piece of application logic.
 function CardFooter({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div

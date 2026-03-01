@@ -22,6 +22,7 @@ const alertVariants = cva(
   },
 )
 
+// Function Alert: handles a specific piece of application logic.
 function Alert({
   className,
   variant,
@@ -37,6 +38,7 @@ function Alert({
   )
 }
 
+// Function AlertTitle: handles a specific piece of application logic.
 function AlertTitle({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -50,6 +52,7 @@ function AlertTitle({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function AlertDescription: handles a specific piece of application logic.
 function AlertDescription({
   className,
   ...props

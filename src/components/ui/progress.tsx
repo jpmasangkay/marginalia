@@ -8,6 +8,7 @@ import * as ProgressPrimitive from '@radix-ui/react-progress'
 
 import { cn } from '@/lib/utils'
 
+// Function Progress: handles a specific piece of application logic.
 function Progress({
   className,
   value,

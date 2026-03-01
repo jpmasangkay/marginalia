@@ -28,6 +28,7 @@ const badgeVariants = cva(
   },
 )
 
+// Function Badge: handles a specific piece of application logic.
 function Badge({
   className,
   variant,

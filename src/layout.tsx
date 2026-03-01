@@ -7,6 +7,7 @@ type RootLayoutProps = {
   children: ReactNode
 }
 
+// Function RootLayout: handles a specific piece of application logic.
 export default function RootLayout({ children }: RootLayoutProps) {
   return <>{children}</>
 }

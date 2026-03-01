@@ -5,6 +5,7 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
+// Function Input: handles a specific piece of application logic.
 function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
   return (
     <input

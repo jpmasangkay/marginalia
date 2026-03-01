@@ -32,7 +32,8 @@ const FormFieldContext = React.createContext<FormFieldContextValue>(
   {} as FormFieldContextValue,
 )
 
-const FormField = <
+const FormField = // Component FormField: renders part of the user interface.
+<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
@@ -45,7 +46,8 @@ const FormField = <
   )
 }
 
-const useFormField = () => {
+const useFormField = // Function useFormField: implements reusable behavior.
+() => {
   const fieldContext = React.useContext(FormFieldContext)
   const itemContext = React.useContext(FormItemContext)
   const { getFieldState } = useFormContext()
@@ -76,6 +78,7 @@ const FormItemContext = React.createContext<FormItemContextValue>(
   {} as FormItemContextValue,
 )
 
+// Function FormItem: handles a specific piece of application logic.
 function FormItem({ className, ...props }: React.ComponentProps<'div'>) {
   const id = React.useId()
 
@@ -90,6 +93,7 @@ function FormItem({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function FormLabel: handles a specific piece of application logic.
 function FormLabel({
   className,
   ...props
@@ -107,6 +111,7 @@ function FormLabel({
   )
 }
 
+// Function FormControl: handles a specific piece of application logic.
 function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
 
@@ -125,6 +130,7 @@ function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
   )
 }
 
+// Function FormDescription: handles a specific piece of application logic.
 function FormDescription({ className, ...props }: React.ComponentProps<'p'>) {
   const { formDescriptionId } = useFormField()
 
@@ -138,6 +144,7 @@ function FormDescription({ className, ...props }: React.ComponentProps<'p'>) {
   )
 }
 
+// Function FormMessage: handles a specific piece of application logic.
 function FormMessage({ className, ...props }: React.ComponentProps<'p'>) {
   const { error, formMessageId } = useFormField()
   const body = error ? String(error?.message ?? '') : props.children

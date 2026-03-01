@@ -9,12 +9,14 @@ import { ChevronDownIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
+// Function Accordion: handles a specific piece of application logic.
 function Accordion({
   ...props
 }: React.ComponentProps<typeof AccordionPrimitive.Root>) {
   return <AccordionPrimitive.Root data-slot="accordion" {...props} />
 }
 
+// Function AccordionItem: handles a specific piece of application logic.
 function AccordionItem({
   className,
   ...props
@@ -28,6 +30,7 @@ function AccordionItem({
   )
 }
 
+// Function AccordionTrigger: handles a specific piece of application logic.
 function AccordionTrigger({
   className,
   children,
@@ -50,6 +53,7 @@ function AccordionTrigger({
   )
 }
 
+// Function AccordionContent: handles a specific piece of application logic.
 function AccordionContent({
   className,
   children,

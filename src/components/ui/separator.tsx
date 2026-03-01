@@ -8,6 +8,7 @@ import * as SeparatorPrimitive from '@radix-ui/react-separator'
 
 import { cn } from '@/lib/utils'
 
+// Function Separator: handles a specific piece of application logic.
 function Separator({
   className,
   orientation = 'horizontal',

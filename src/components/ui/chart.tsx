@@ -27,6 +27,7 @@ type ChartContextProps = {
 
 const ChartContext = React.createContext<ChartContextProps | null>(null)
 
+// Function useChart: handles a specific piece of application logic.
 function useChart() {
   const context = React.useContext(ChartContext)
 
@@ -37,6 +38,7 @@ function useChart() {
   return context
 }
 
+// Function ChartContainer: handles a specific piece of application logic.
 function ChartContainer({
   id,
   className,
@@ -72,9 +74,11 @@ function ChartContainer({
   )
 }
 
-const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
+const ChartStyle = // Component ChartStyle: renders part of the user interface.
+({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(
-    ([, config]) => config.theme || config.color,
+        // Function: implements scoped behavior for this module.
+([, config]) => config.theme || config.color,
   )
 
   if (!colorConfig.length) {
@@ -86,10 +90,12 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
       dangerouslySetInnerHTML={{
         __html: Object.entries(THEMES)
           .map(
-            ([theme, prefix]) => `
+                        // Function: implements scoped behavior for this module.
+([theme, prefix]) => `
 ${prefix} [data-chart=${id}] {
 ${colorConfig
-  .map(([key, itemConfig]) => {
+  .map(  // Function: implements scoped behavior for this module.
+([key, itemConfig]) => {
     const color =
       itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
       itemConfig.color
@@ -107,6 +113,7 @@ ${colorConfig
 
 const ChartTooltip = RechartsPrimitive.Tooltip
 
+// Function ChartTooltipContent: handles a specific piece of application logic.
 function ChartTooltipContent({
   active,
   payload,
@@ -131,7 +138,8 @@ function ChartTooltipContent({
   }) {
   const { config } = useChart()
 
-  const tooltipLabel = React.useMemo(() => {
+  const tooltipLabel = React.useMemo(  // Function: implements scoped behavior for this module.
+() => {
     if (hideLabel || !payload?.length) {
       return null
     }
@@ -182,7 +190,8 @@ function ChartTooltipContent({
     >
       {!nestLabel ? tooltipLabel : null}
       <div className="grid gap-1.5">
-        {payload.map((item, index) => {
+        {payload.map(        // Function: implements scoped behavior for this module.
+(item, index) => {
           const key = `${nameKey || item.name || item.dataKey || 'value'}`
           const itemConfig = getPayloadConfigFromPayload(config, item, key)
           const indicatorColor = color || item.payload.fill || item.color
@@ -253,6 +262,7 @@ function ChartTooltipContent({
 
 const ChartLegend = RechartsPrimitive.Legend
 
+// Function ChartLegendContent: handles a specific piece of application logic.
 function ChartLegendContent({
   className,
   hideIcon = false,
@@ -278,7 +288,8 @@ function ChartLegendContent({
         className,
       )}
     >
-      {payload.map((item) => {
+      {payload.map(      // Function: implements scoped behavior for this module.
+(item) => {
         const key = `${nameKey || item.dataKey || 'value'}`
         const itemConfig = getPayloadConfigFromPayload(config, item, key)
 
@@ -308,6 +319,7 @@ function ChartLegendContent({
 }
 
 // Helper to extract item config from a payload.
+// Function getPayloadConfigFromPayload: handles a specific piece of application logic.
 function getPayloadConfigFromPayload(
   config: ChartConfig,
   payload: unknown,

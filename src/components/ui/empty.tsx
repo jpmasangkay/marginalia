@@ -5,6 +5,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/lib/utils'
 
+// Function Empty: handles a specific piece of application logic.
 function Empty({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -18,6 +19,7 @@ function Empty({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function EmptyHeader: handles a specific piece of application logic.
 function EmptyHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -46,6 +48,7 @@ const emptyMediaVariants = cva(
   },
 )
 
+// Function EmptyMedia: handles a specific piece of application logic.
 function EmptyMedia({
   className,
   variant = 'default',
@@ -61,6 +64,7 @@ function EmptyMedia({
   )
 }
 
+// Function EmptyTitle: handles a specific piece of application logic.
 function EmptyTitle({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -71,6 +75,7 @@ function EmptyTitle({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function EmptyDescription: handles a specific piece of application logic.
 function EmptyDescription({ className, ...props }: React.ComponentProps<'p'>) {
   return (
     <div
@@ -84,6 +89,7 @@ function EmptyDescription({ className, ...props }: React.ComponentProps<'p'>) {
   )
 }
 
+// Function EmptyContent: handles a specific piece of application logic.
 function EmptyContent({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div

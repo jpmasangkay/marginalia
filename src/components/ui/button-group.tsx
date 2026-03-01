@@ -24,6 +24,7 @@ const buttonGroupVariants = cva(
   },
 )
 
+// Function ButtonGroup: handles a specific piece of application logic.
 function ButtonGroup({
   className,
   orientation,
@@ -40,6 +41,7 @@ function ButtonGroup({
   )
 }
 
+// Function ButtonGroupText: handles a specific piece of application logic.
 function ButtonGroupText({
   className,
   asChild = false,
@@ -60,6 +62,7 @@ function ButtonGroupText({
   )
 }
 
+// Function ButtonGroupSeparator: handles a specific piece of application logic.
 function ButtonGroupSeparator({
   className,
   orientation = 'vertical',

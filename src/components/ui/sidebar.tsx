@@ -47,6 +47,7 @@ type SidebarContextProps = {
 
 const SidebarContext = React.createContext<SidebarContextProps | null>(null)
 
+// Function useSidebar: handles a specific piece of application logic.
 function useSidebar() {
   const context = React.useContext(SidebarContext)
   if (!context) {
@@ -56,6 +57,7 @@ function useSidebar() {
   return context
 }
 
+// Function SidebarProvider: handles a specific piece of application logic.
 function SidebarProvider({
   defaultOpen = true,
   open: openProp,
@@ -77,7 +79,8 @@ function SidebarProvider({
   const [_open, _setOpen] = React.useState(defaultOpen)
   const open = openProp ?? _open
   const setOpen = React.useCallback(
-    (value: boolean | ((value: boolean) => boolean)) => {
+        // Function: implements scoped behavior for this module.
+(value: boolean | ((value: boolean) => boolean)) => {
       const openState = typeof value === 'function' ? value(open) : value
       if (setOpenProp) {
         setOpenProp(openState)
@@ -92,13 +95,18 @@ function SidebarProvider({
   )
 
   // Helper to toggle the sidebar.
-  const toggleSidebar = React.useCallback(() => {
-    return isMobile ? setOpenMobile((open) => !open) : setOpen((open) => !open)
+  const toggleSidebar = React.useCallback(  // Function: implements scoped behavior for this module.
+() => {
+    return isMobile ? setOpenMobile(    // Function: implements scoped behavior for this module.
+(open) => !open) : setOpen(    // Function: implements scoped behavior for this module.
+(open) => !open)
   }, [isMobile, setOpen, setOpenMobile])
 
   // Adds a keyboard shortcut to toggle the sidebar.
-  React.useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
+  React.useEffect(  // Function: implements scoped behavior for this module.
+() => {
+    const handleKeyDown =     // Function handleKeyDown: implements reusable behavior.
+(event: KeyboardEvent) => {
       if (
         event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
         (event.metaKey || event.ctrlKey)
@@ -109,7 +117,8 @@ function SidebarProvider({
     }
 
     window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    return     // Function: implements scoped behavior for this module.
+() => window.removeEventListener('keydown', handleKeyDown)
   }, [toggleSidebar])
 
   // We add a state so that we can do data-state="expanded" or "collapsed".
@@ -117,7 +126,8 @@ function SidebarProvider({
   const state = open ? 'expanded' : 'collapsed'
 
   const contextValue = React.useMemo<SidebarContextProps>(
-    () => ({
+        // Function: implements scoped behavior for this module.
+() => ({
       state,
       open,
       setOpen,
@@ -154,6 +164,7 @@ function SidebarProvider({
   )
 }
 
+// Function Sidebar: handles a specific piece of application logic.
 function Sidebar({
   side = 'left',
   variant = 'sidebar',
@@ -256,6 +267,7 @@ function Sidebar({
   )
 }
 
+// Function SidebarTrigger: handles a specific piece of application logic.
 function SidebarTrigger({
   className,
   onClick,
@@ -270,7 +282,8 @@ function SidebarTrigger({
       variant="ghost"
       size="icon"
       className={cn('size-7', className)}
-      onClick={(event) => {
+      onClick={      // Function: implements scoped behavior for this module.
+(event) => {
         onClick?.(event)
         toggleSidebar()
       }}
@@ -282,6 +295,7 @@ function SidebarTrigger({
   )
 }
 
+// Function SidebarRail: handles a specific piece of application logic.
 function SidebarRail({ className, ...props }: React.ComponentProps<'button'>) {
   const { toggleSidebar } = useSidebar()
 
@@ -307,6 +321,7 @@ function SidebarRail({ className, ...props }: React.ComponentProps<'button'>) {
   )
 }
 
+// Function SidebarInset: handles a specific piece of application logic.
 function SidebarInset({ className, ...props }: React.ComponentProps<'main'>) {
   return (
     <main
@@ -321,6 +336,7 @@ function SidebarInset({ className, ...props }: React.ComponentProps<'main'>) {
   )
 }
 
+// Function SidebarInput: handles a specific piece of application logic.
 function SidebarInput({
   className,
   ...props
@@ -335,6 +351,7 @@ function SidebarInput({
   )
 }
 
+// Function SidebarHeader: handles a specific piece of application logic.
 function SidebarHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -346,6 +363,7 @@ function SidebarHeader({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function SidebarFooter: handles a specific piece of application logic.
 function SidebarFooter({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -357,6 +375,7 @@ function SidebarFooter({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function SidebarSeparator: handles a specific piece of application logic.
 function SidebarSeparator({
   className,
   ...props
@@ -371,6 +390,7 @@ function SidebarSeparator({
   )
 }
 
+// Function SidebarContent: handles a specific piece of application logic.
 function SidebarContent({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -385,6 +405,7 @@ function SidebarContent({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function SidebarGroup: handles a specific piece of application logic.
 function SidebarGroup({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -396,6 +417,7 @@ function SidebarGroup({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function SidebarGroupLabel: handles a specific piece of application logic.
 function SidebarGroupLabel({
   className,
   asChild = false,
@@ -417,6 +439,7 @@ function SidebarGroupLabel({
   )
 }
 
+// Function SidebarGroupAction: handles a specific piece of application logic.
 function SidebarGroupAction({
   className,
   asChild = false,
@@ -440,6 +463,7 @@ function SidebarGroupAction({
   )
 }
 
+// Function SidebarGroupContent: handles a specific piece of application logic.
 function SidebarGroupContent({
   className,
   ...props
@@ -454,6 +478,7 @@ function SidebarGroupContent({
   )
 }
 
+// Function SidebarMenu: handles a specific piece of application logic.
 function SidebarMenu({ className, ...props }: React.ComponentProps<'ul'>) {
   return (
     <ul
@@ -465,6 +490,7 @@ function SidebarMenu({ className, ...props }: React.ComponentProps<'ul'>) {
   )
 }
 
+// Function SidebarMenuItem: handles a specific piece of application logic.
 function SidebarMenuItem({ className, ...props }: React.ComponentProps<'li'>) {
   return (
     <li
@@ -498,6 +524,7 @@ const sidebarMenuButtonVariants = cva(
   },
 )
 
+// Function SidebarMenuButton: handles a specific piece of application logic.
 function SidebarMenuButton({
   asChild = false,
   isActive = false,
@@ -548,6 +575,7 @@ function SidebarMenuButton({
   )
 }
 
+// Function SidebarMenuAction: handles a specific piece of application logic.
 function SidebarMenuAction({
   className,
   asChild = false,
@@ -580,6 +608,7 @@ function SidebarMenuAction({
   )
 }
 
+// Function SidebarMenuBadge: handles a specific piece of application logic.
 function SidebarMenuBadge({
   className,
   ...props
@@ -602,6 +631,7 @@ function SidebarMenuBadge({
   )
 }
 
+// Function SidebarMenuSkeleton: handles a specific piece of application logic.
 function SidebarMenuSkeleton({
   className,
   showIcon = false,
@@ -610,7 +640,8 @@ function SidebarMenuSkeleton({
   showIcon?: boolean
 }) {
   // Random width between 50 to 90%.
-  const width = React.useMemo(() => {
+  const width = React.useMemo(  // Function: implements scoped behavior for this module.
+() => {
     return `${Math.floor(Math.random() * 40) + 50}%`
   }, [])
 
@@ -640,6 +671,7 @@ function SidebarMenuSkeleton({
   )
 }
 
+// Function SidebarMenuSub: handles a specific piece of application logic.
 function SidebarMenuSub({ className, ...props }: React.ComponentProps<'ul'>) {
   return (
     <ul
@@ -655,6 +687,7 @@ function SidebarMenuSub({ className, ...props }: React.ComponentProps<'ul'>) {
   )
 }
 
+// Function SidebarMenuSubItem: handles a specific piece of application logic.
 function SidebarMenuSubItem({
   className,
   ...props
@@ -669,6 +702,7 @@ function SidebarMenuSubItem({
   )
 }
 
+// Function SidebarMenuSubButton: handles a specific piece of application logic.
 function SidebarMenuSubButton({
   asChild = false,
   size = 'md',

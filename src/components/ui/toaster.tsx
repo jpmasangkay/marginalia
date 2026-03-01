@@ -13,12 +13,14 @@ import {
   ToastViewport,
 } from '@/components/ui/toast'
 
+// Function Toaster: handles a specific piece of application logic.
 export function Toaster() {
   const { toasts } = useToast()
 
   return (
     <ToastProvider>
-      {toasts.map(function ({ id, title, description, action, ...props }) {
+      {toasts.map(      // Function: implements scoped behavior for this module.
+function ({ id, title, description, action, ...props }) {
         return (
           <Toast key={id} {...props}>
             <div className="grid gap-1">

@@ -9,24 +9,28 @@ import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
+// Function Select: handles a specific piece of application logic.
 function Select({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Root>) {
   return <SelectPrimitive.Root data-slot="select" {...props} />
 }
 
+// Function SelectGroup: handles a specific piece of application logic.
 function SelectGroup({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Group>) {
   return <SelectPrimitive.Group data-slot="select-group" {...props} />
 }
 
+// Function SelectValue: handles a specific piece of application logic.
 function SelectValue({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Value>) {
   return <SelectPrimitive.Value data-slot="select-value" {...props} />
 }
 
+// Function SelectTrigger: handles a specific piece of application logic.
 function SelectTrigger({
   className,
   size = 'default',
@@ -53,6 +57,7 @@ function SelectTrigger({
   )
 }
 
+// Function SelectContent: handles a specific piece of application logic.
 function SelectContent({
   className,
   children,
@@ -88,6 +93,7 @@ function SelectContent({
   )
 }
 
+// Function SelectLabel: handles a specific piece of application logic.
 function SelectLabel({
   className,
   ...props
@@ -101,6 +107,7 @@ function SelectLabel({
   )
 }
 
+// Function SelectItem: handles a specific piece of application logic.
 function SelectItem({
   className,
   children,
@@ -125,6 +132,7 @@ function SelectItem({
   )
 }
 
+// Function SelectSeparator: handles a specific piece of application logic.
 function SelectSeparator({
   className,
   ...props
@@ -138,6 +146,7 @@ function SelectSeparator({
   )
 }
 
+// Function SelectScrollUpButton: handles a specific piece of application logic.
 function SelectScrollUpButton({
   className,
   ...props
@@ -156,6 +165,7 @@ function SelectScrollUpButton({
   )
 }
 
+// Function SelectScrollDownButton: handles a specific piece of application logic.
 function SelectScrollDownButton({
   className,
   ...props

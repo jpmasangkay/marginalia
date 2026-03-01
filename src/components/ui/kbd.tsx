@@ -3,6 +3,7 @@
  */
 import { cn } from '@/lib/utils'
 
+// Function Kbd: handles a specific piece of application logic.
 function Kbd({ className, ...props }: React.ComponentProps<'kbd'>) {
   return (
     <kbd
@@ -18,6 +19,7 @@ function Kbd({ className, ...props }: React.ComponentProps<'kbd'>) {
   )
 }
 
+// Function KbdGroup: handles a specific piece of application logic.
 function KbdGroup({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <kbd

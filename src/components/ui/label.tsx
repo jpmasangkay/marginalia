@@ -8,6 +8,7 @@ import * as LabelPrimitive from '@radix-ui/react-label'
 
 import { cn } from '@/lib/utils'
 
+// Function Label: handles a specific piece of application logic.
 function Label({
   className,
   ...props

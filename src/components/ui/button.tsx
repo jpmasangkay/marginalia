@@ -39,6 +39,7 @@ const buttonVariants = cva(
   },
 )
 
+// Function Button: handles a specific piece of application logic.
 function Button({
   className,
   variant,

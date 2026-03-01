@@ -35,6 +35,7 @@ type CarouselContextProps = {
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null)
 
+// Function useCarousel: handles a specific piece of application logic.
 function useCarousel() {
   const context = React.useContext(CarouselContext)
 
@@ -45,6 +46,7 @@ function useCarousel() {
   return context
 }
 
+// Function Carousel: handles a specific piece of application logic.
 function Carousel({
   orientation = 'horizontal',
   opts,
@@ -64,22 +66,26 @@ function Carousel({
   const [canScrollPrev, setCanScrollPrev] = React.useState(false)
   const [canScrollNext, setCanScrollNext] = React.useState(false)
 
-  const onSelect = React.useCallback((api: CarouselApi) => {
+  const onSelect = React.useCallback(  // Function: implements scoped behavior for this module.
+(api: CarouselApi) => {
     if (!api) return
     setCanScrollPrev(api.canScrollPrev())
     setCanScrollNext(api.canScrollNext())
   }, [])
 
-  const scrollPrev = React.useCallback(() => {
+  const scrollPrev = React.useCallback(  // Function: implements scoped behavior for this module.
+() => {
     api?.scrollPrev()
   }, [api])
 
-  const scrollNext = React.useCallback(() => {
+  const scrollNext = React.useCallback(  // Function: implements scoped behavior for this module.
+() => {
     api?.scrollNext()
   }, [api])
 
   const handleKeyDown = React.useCallback(
-    (event: React.KeyboardEvent<HTMLDivElement>) => {
+        // Function: implements scoped behavior for this module.
+(event: React.KeyboardEvent<HTMLDivElement>) => {
       if (event.key === 'ArrowLeft') {
         event.preventDefault()
         scrollPrev()
@@ -91,18 +97,21 @@ function Carousel({
     [scrollPrev, scrollNext],
   )
 
-  React.useEffect(() => {
+  React.useEffect(  // Function: implements scoped behavior for this module.
+() => {
     if (!api || !setApi) return
     setApi(api)
   }, [api, setApi])
 
-  React.useEffect(() => {
+  React.useEffect(  // Function: implements scoped behavior for this module.
+() => {
     if (!api) return
     onSelect(api)
     api.on('reInit', onSelect)
     api.on('select', onSelect)
 
-    return () => {
+    return     // Function: implements scoped behavior for this module.
+() => {
       api?.off('select', onSelect)
     }
   }, [api, onSelect])
@@ -135,6 +144,7 @@ function Carousel({
   )
 }
 
+// Function CarouselContent: handles a specific piece of application logic.
 function CarouselContent({ className, ...props }: React.ComponentProps<'div'>) {
   const { carouselRef, orientation } = useCarousel()
 
@@ -156,6 +166,7 @@ function CarouselContent({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function CarouselItem: handles a specific piece of application logic.
 function CarouselItem({ className, ...props }: React.ComponentProps<'div'>) {
   const { orientation } = useCarousel()
 
@@ -174,6 +185,7 @@ function CarouselItem({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+// Function CarouselPrevious: handles a specific piece of application logic.
 function CarouselPrevious({
   className,
   variant = 'outline',
@@ -204,6 +216,7 @@ function CarouselPrevious({
   )
 }
 
+// Function CarouselNext: handles a specific piece of application logic.
 function CarouselNext({
   className,
   variant = 'outline',
