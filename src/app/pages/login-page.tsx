@@ -34,19 +34,6 @@ export function LoginPage() {
       </div>
 
       <div className="w-full max-w-md relative z-10 flex flex-col gap-4">
-        {/* Logo sticky note */}
-        <div className="bg-[#fef3c7] rounded-3xl shadow-lg shadow-amber-200/40 px-6 py-4 transform -rotate-1 border-b-4 border-amber-200/50">
-          <div className="flex items-center justify-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-[#a78bfa] to-[#c4b5fd] rounded-full flex items-center justify-center shadow-md transform rotate-6">
-              <Sparkles className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-2xl text-[#4a4458]" style={{ fontWeight: 700 }}>Marginilia</span>
-          </div>
-          <p className="text-center text-[#6b5a3d] text-sm mt-1 opacity-80">
-            your thoughts, organized & pretty
-          </p>
-        </div>
-
         {/* Main form sticky note */}
         <div
           className="rounded-3xl shadow-xl px-7 py-6 transform rotate-1 border-b-4"

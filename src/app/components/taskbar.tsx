@@ -91,26 +91,6 @@ export function Taskbar({
         boxShadow: "0 4px 12px -2px rgba(167,139,250,0.08), 0 1px 4px rgba(167,139,250,0.06)",
       }}
     >
-      {/* Logo — styled as its own pinned note */}
-      <div
-        className="flex items-center gap-2.5 px-4 py-2 rounded-2xl border-b-4 shadow-md select-none flex-shrink-0"
-        style={{
-          backgroundColor: "#fff9e6",
-          borderBottomColor: "rgba(251, 211, 141, 0.6)",
-          boxShadow: "0 4px 8px -2px rgba(251,211,141,0.35)",
-        }}
-      >
-        <div className="w-8 h-8 bg-gradient-to-br from-[#a78bfa] to-[#c4b5fd] rounded-xl flex items-center justify-center shadow-sm transform -rotate-3">
-          <Sparkles className="w-4 h-4 text-white" />
-        </div>
-        <span className="text-[#4a4458] hidden sm:block" style={{ fontWeight: 700 }}>
-          Marginilia
-        </span>
-      </div>
-
-      {/* Divider */}
-      <div className="w-px h-8 bg-[#e9d5ff]/60 mx-1 flex-shrink-0" />
-
       {/* Search — note card style */}
       <div
         className="relative flex-1 max-w-sm rounded-2xl border-b-[3px] shadow-sm overflow-hidden"

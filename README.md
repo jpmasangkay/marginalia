@@ -1,7 +1,7 @@
 
-  # Kawaii Minimalist Landing Page
+  # marginalia
 
-  This is a code bundle for Kawaii Minimalist Landing Page. The original project is available at https://www.figma.com/design/DlWxrPnyKLqssDQe6EXnxP/Kawaii-Minimalist-Landing-Page.
+  This is a code bundle for marginalia. The original project is available at https://www.figma.com/design/DlWxrPnyKLqssDQe6EXnxP/marginalia.
 
   ## Running the code
 

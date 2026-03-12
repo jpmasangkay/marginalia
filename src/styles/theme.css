@@ -178,4 +178,37 @@
     font-weight: var(--font-weight-normal);
     line-height: 1.5;
   }
+
+  /* Kawaii sticky-note scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f3eeff;
+    border-radius: 999px;
+    margin: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(160deg, #c4b5fd, #a78bfa);
+    border-radius: 999px;
+    border: 2px solid #f3eeff;
+    box-shadow: 0 2px 6px rgba(167, 139, 250, 0.35);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(160deg, #a78bfa, #8b5cf6);
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.45);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #c4b5fd #f3eeff;
+  }
 }
