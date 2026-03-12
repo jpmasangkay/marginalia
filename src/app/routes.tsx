@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router";
-import { LoginPage } from "./pages/login-page";
-import { Dashboard } from "./pages/dashboard";
-import { Redirect } from "./components/redirect";
+import { LoginPage } from "../features/auth/login-page";
+import { Dashboard } from "../features/dashboard/dashboard";
+import { Redirect } from "../shared/components/redirect";
 
 export const router = createBrowserRouter([
   {

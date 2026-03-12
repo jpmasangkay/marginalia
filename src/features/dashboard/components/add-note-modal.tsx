@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { X, Plus, ListChecks, FileText, Trash2 } from "lucide-react";
-import type { Note, ChecklistItem } from "../pages/dashboard";
+import type { Note, ChecklistItem } from "../dashboard";
 
 interface AddNoteModalProps {
   isOpen: boolean;

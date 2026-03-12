@@ -1,7 +1,7 @@
 import Masonry from "react-responsive-masonry";
 import { StickyNote as StickyNoteIcon } from "lucide-react";
 import { StickyNote } from "./sticky-note";
-import type { Note } from "../pages/dashboard";
+import type { Note } from "../dashboard";
 
 interface NotesGridProps {
   notes: Note[];

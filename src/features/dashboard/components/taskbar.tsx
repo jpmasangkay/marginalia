@@ -2,7 +2,7 @@ import { Search, Bell, Plus, User, Calendar as CalendarIcon, ChevronDown, LogOut
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Calendar } from "./calendar";
-import type { Notification } from "../pages/dashboard";
+import type { Notification } from "../dashboard";
 
 interface TaskbarProps {
   searchQuery: string;

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Sidebar } from "../components/sidebar";
-import { NotesGrid } from "../components/notes-grid";
-import { AddNoteModal } from "../components/add-note-modal";
-import { Taskbar } from "../components/taskbar";
-import { Calendar } from "../components/calendar";
+import { Sidebar } from "./components/sidebar";
+import { NotesGrid } from "./components/notes-grid";
+import { AddNoteModal } from "./components/add-note-modal";
+import { Taskbar } from "./components/taskbar";
+import { Calendar } from "./components/calendar";
 
 export interface ChecklistItem {
   id: string;

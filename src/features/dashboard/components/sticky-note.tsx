@@ -1,5 +1,5 @@
 import { Trash2, CheckSquare, Square, CalendarDays } from "lucide-react";
-import type { Note, ChecklistItem } from "../pages/dashboard";
+import type { Note, ChecklistItem } from "../dashboard";
 
 interface StickyNoteProps {
   note: Note;
