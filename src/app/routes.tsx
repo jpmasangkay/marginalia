@@ -6,15 +6,15 @@ import { Redirect } from "../shared/components/redirect";
 export const router = createBrowserRouter([
   {
     path: "/",
-    Component: Dashboard,
-  },
-  {
-    path: "/login",
     Component: LoginPage,
   },
   {
-    path: "/dashboard",
+    path: "/login",
     element: <Redirect to="/" />,
+  },
+  {
+    path: "/dashboard",
+    Component: Dashboard,
   },
   {
     path: "*",
