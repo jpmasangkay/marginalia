@@ -2,6 +2,7 @@ import { Search, Bell, Plus, User, Calendar as CalendarIcon, ChevronDown, LogOut
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Calendar } from "./calendar";
+import { useAuth } from "../../../lib/auth-context";
 import type { Notification } from "../dashboard";
 
 interface TaskbarProps {
@@ -29,6 +30,7 @@ export function Taskbar({
   const [showNotifications, setShowNotifications] = useState(false);
   const calendarRef = useRef<HTMLDivElement>(null);
   const notificationsRef = useRef<HTMLDivElement>(null);
+  const { logout } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -50,8 +52,13 @@ export function Taskbar({
     };
   }, [showCalendar, showNotifications]);
 
-  const handleLogout = () => {
-    navigate("/login");
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/login");
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
   };
 
   const unreadCount = notifications.filter((n) => !n.read).length;

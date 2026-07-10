@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Sparkles, StickyNote, Plus, Hash, Trash2 } from "lucide-react";
 
 interface Category {
+  id: string;
   name: string;
   color: string;
 }
@@ -10,7 +11,7 @@ interface SidebarProps {
   selectedCategory: string;
   onSelectCategory: (category: string) => void;
   categories: Category[];
-  onAddCategory: (category: Category) => void;
+  onAddCategory: (category: { name: string; color: string }) => void;
   onDeleteCategory: (name: string) => void;
   noteCounts: Record<string, number>;
   totalNotes: number;
@@ -54,7 +55,7 @@ export function Sidebar({
         <div className="w-10 h-10 bg-gradient-to-br from-[#a78bfa] to-[#c4b5fd] rounded-2xl flex items-center justify-center shadow-md shadow-purple-200/50 transform -rotate-3 hover:rotate-0 transition-transform">
           <Sparkles className="w-5 h-5 text-white" />
         </div>
-        <span className="text-xl text-[#4a4458]" style={{ fontWeight: 700 }}>Marginilia</span>
+        <span className="text-xl text-[#4a4458]" style={{ fontWeight: 700 }}>Marginalia</span>
       </div>
 
       {/* All Notes */}
@@ -97,6 +98,7 @@ export function Sidebar({
               onKeyDown={handleKeyDown}
               placeholder="new category..."
               autoFocus
+              maxLength={50}
               className="w-full px-4 py-2.5 bg-white/80 border-2 border-white/50 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-300 focus:bg-white transition-all mb-3 text-[#4a4458] placeholder:text-[#9b8fad]"
             />
             <div className="flex gap-2 mb-3 flex-wrap">
@@ -148,7 +150,7 @@ export function Sidebar({
 
             return (
               <div
-                key={category.name}
+                key={category.id}
                 className={`group flex items-center justify-between px-4 py-3 rounded-2xl transition-all duration-200 transform hover:scale-105 ${rotation} ${
                   isSelected
                     ? "bg-gradient-to-r from-[#f3eeff] to-[#e9d5ff] shadow-md scale-105"

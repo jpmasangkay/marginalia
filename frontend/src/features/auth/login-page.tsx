@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Sparkles, Mail, Lock, User, Eye, EyeOff, Star, StickyNote, Heart } from "lucide-react";
+import { toast } from "sonner";
+import { useAuth } from "../../lib/auth-context";
+import type { AxiosError } from "axios";
+
+interface ApiError {
+  message: string;
+  errors?: { field: string; message: string }[];
+}
 
 export function LoginPage() {
   const [isSignup, setIsSignup] = useState(false);
@@ -8,11 +16,38 @@ export function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const navigate = useNavigate();
+  const { login, register } = useAuth();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/");
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
+    try {
+      if (isSignup) {
+        await register(name.trim(), email, password);
+        toast.success("Account created! Welcome to Marginalia 🎉");
+      } else {
+        await login(email, password);
+        toast.success("Welcome back! ✨");
+      }
+      navigate("/dashboard");
+    } catch (err) {
+      const axiosErr = err as AxiosError<ApiError>;
+      const serverMsg = axiosErr.response?.data?.message;
+      // Show first field-level error if available, else the generic message
+      const fieldErrors = axiosErr.response?.data?.errors;
+      const displayMsg =
+        fieldErrors && fieldErrors.length > 0
+          ? fieldErrors[0].message
+          : serverMsg ?? (isSignup ? "Could not create account. Please try again." : "Invalid email or password.");
+      toast.error(displayMsg);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -89,6 +124,9 @@ export function LoginPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="your name"
+                  required
+                  minLength={2}
+                  maxLength={50}
                   className="w-full pl-11 pr-4 py-3 bg-white/70 backdrop-blur-sm border-2 border-white/50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-white focus:bg-white/90 transition-all duration-200 text-[#4a4458] placeholder:text-[#9b8fad] text-sm"
                 />
               </div>
@@ -101,6 +139,7 @@ export function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="email address"
+                required
                 className="w-full pl-11 pr-4 py-3 bg-white/70 backdrop-blur-sm border-2 border-white/50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-white focus:bg-white/90 transition-all duration-200 text-[#4a4458] placeholder:text-[#9b8fad] text-sm"
               />
             </div>
@@ -111,7 +150,9 @@ export function LoginPage() {
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="password"
+                placeholder={isSignup ? "password (min 8 chars + 1 number)" : "password"}
+                required
+                minLength={8}
                 className="w-full pl-11 pr-11 py-3 bg-white/70 backdrop-blur-sm border-2 border-white/50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-white focus:bg-white/90 transition-all duration-200 text-[#4a4458] placeholder:text-[#9b8fad] text-sm"
               />
               <button
@@ -123,20 +164,15 @@ export function LoginPage() {
               </button>
             </div>
 
-            {!isSignup && (
-              <div className="text-right">
-                <button type="button" className="text-[#8b5cf6] text-xs hover:underline transition-all">
-                  forgot password?
-                </button>
-              </div>
-            )}
-
             <button
               type="submit"
-              className="w-full py-3.5 bg-gradient-to-r from-[#a78bfa] to-[#c4b5fd] text-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105"
+              disabled={isSubmitting}
+              className="w-full py-3.5 bg-gradient-to-r from-[#a78bfa] to-[#c4b5fd] text-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
               style={{ fontWeight: 600 }}
             >
-              {isSignup ? "let's go!" : "log me in!"}
+              {isSubmitting
+                ? (isSignup ? "creating account..." : "logging in...")
+                : (isSignup ? "let's go!" : "log me in!")}
             </button>
           </form>
 
