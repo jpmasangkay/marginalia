@@ -2,18 +2,17 @@ services:
   - type: web
     name: marginalia-api
     env: node
+    rootDir: backend
     buildCommand: npm install && npm run build
     startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 5000
       - key: ALLOWED_ORIGIN
-        value: https://your-app.vercel.app # TODO: Update this to actual Vercel domain
+        sync: false # Set this in Render dashboard to your Vercel URL
       - key: MONGODB_URI
-        sync: false
+        sync: false # Set this in Render dashboard
       - key: JWT_SECRET
-        sync: false
+        sync: false # Set this in Render dashboard
       - key: JWT_REFRESH_SECRET
-        sync: false
+        sync: false # Set this in Render dashboard
