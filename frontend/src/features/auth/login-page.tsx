@@ -52,18 +52,18 @@ export function LoginPage() {
 
   return (
     <div className="h-screen bg-[#faf8fc] flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Floating doodles */}
+      {/* Floating doodles — hidden on very small screens to avoid crowding */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-12 left-16 text-[#e9d5ff] transform -rotate-12">
+        <div className="absolute top-12 left-16 text-[#e9d5ff] transform -rotate-12 hidden sm:block">
           <Star className="w-7 h-7 opacity-40" />
         </div>
-        <div className="absolute top-24 right-24 text-[#fecdd3] transform rotate-12">
+        <div className="absolute top-24 right-24 text-[#fecdd3] transform rotate-12 hidden sm:block">
           <Heart className="w-5 h-5 opacity-40" />
         </div>
-        <div className="absolute bottom-24 left-32 text-[#c4b5fd] transform rotate-45">
+        <div className="absolute bottom-24 left-32 text-[#c4b5fd] transform rotate-45 hidden sm:block">
           <Sparkles className="w-6 h-6 opacity-30" />
         </div>
-        <div className="absolute bottom-16 right-16 text-[#fed7aa] transform -rotate-6">
+        <div className="absolute bottom-16 right-16 text-[#fed7aa] transform -rotate-6 hidden sm:block">
           <StickyNote className="w-8 h-8 opacity-25" />
         </div>
       </div>
@@ -150,7 +150,7 @@ export function LoginPage() {
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder={isSignup ? "password (min 8 chars + 1 number)" : "password"}
+                placeholder={isSignup ? "min 8 chars + 1 number" : "password"}
                 required
                 minLength={8}
                 className="w-full pl-11 pr-11 py-3 bg-white/70 backdrop-blur-sm border-2 border-white/50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-white focus:bg-white/90 transition-all duration-200 text-[#4a4458] placeholder:text-[#9b8fad] text-sm"

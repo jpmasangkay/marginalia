@@ -1,4 +1,4 @@
-import { Search, Bell, Plus, User, Calendar as CalendarIcon, ChevronDown, LogOut, Check, Trash2, Sparkles } from "lucide-react";
+import { Search, Bell, Plus, User, Calendar as CalendarIcon, ChevronDown, LogOut, Check, Trash2, Sparkles, Menu } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Calendar } from "./calendar";
@@ -14,6 +14,7 @@ interface TaskbarProps {
   notifications: Notification[];
   onMarkNotificationRead: (id: string) => void;
   onClearAllNotifications: () => void;
+  onToggleSidebar: () => void;
 }
 
 export function Taskbar({
@@ -25,6 +26,7 @@ export function Taskbar({
   notifications,
   onMarkNotificationRead,
   onClearAllNotifications,
+  onToggleSidebar,
 }: TaskbarProps) {
   const [showCalendar, setShowCalendar] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -91,16 +93,30 @@ export function Taskbar({
 
   return (
     <div
-      className="sticky top-0 z-30 px-5 py-3 flex items-center gap-3 border-b-4"
+      className="sticky top-0 z-30 px-3 sm:px-5 py-3 flex items-center gap-2 sm:gap-3 border-b-4"
       style={{
         backgroundColor: "#fef9ec",
         borderBottomColor: "rgba(251, 211, 141, 0.45)",
         boxShadow: "0 4px 12px -2px rgba(167,139,250,0.08), 0 1px 4px rgba(167,139,250,0.06)",
       }}
     >
+      {/* Hamburger — mobile only */}
+      <button
+        onClick={onToggleSidebar}
+        className="lg:hidden w-10 h-10 rounded-2xl flex items-center justify-center border-b-[3px] shadow-sm transition-all duration-200 hover:-translate-y-0.5 flex-shrink-0"
+        style={{
+          backgroundColor: "#fff",
+          borderBottomColor: "rgba(196,181,253,0.5)",
+          boxShadow: "0 3px 8px -2px rgba(167,139,250,0.12)",
+        }}
+        aria-label="Open sidebar"
+      >
+        <Menu className="w-4 h-4 text-[#a78bfa]" />
+      </button>
+
       {/* Search — note card style */}
       <div
-        className="relative flex-1 max-w-sm rounded-2xl border-b-[3px] shadow-sm overflow-hidden"
+        className="relative flex-1 min-w-0 rounded-2xl border-b-[3px] shadow-sm overflow-hidden"
         style={{
           backgroundColor: "#fff",
           borderBottomColor: "rgba(196,181,253,0.5)",
@@ -118,12 +134,12 @@ export function Taskbar({
       </div>
 
       {/* Right side controls */}
-      <div className="flex items-center gap-2 ml-auto flex-shrink-0">
+      <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
 
-        {/* New Note button — note card style */}
+        {/* New Note button */}
         <button
           onClick={onNewNote}
-          className="flex items-center gap-2 px-4 py-2.5 text-white rounded-2xl border-b-[3px] shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg text-sm flex-shrink-0"
+          className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2.5 text-white rounded-2xl border-b-[3px] shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg text-sm flex-shrink-0"
           style={{
             background: "linear-gradient(135deg, #a78bfa, #c4b5fd)",
             borderBottomColor: "rgba(139,92,246,0.4)",
@@ -131,11 +147,11 @@ export function Taskbar({
           }}
         >
           <Plus className="w-4 h-4" />
-          <span style={{ fontWeight: 600 }}>New Note</span>
+          <span className="hidden sm:inline" style={{ fontWeight: 600 }}>New Note</span>
         </button>
 
         {/* Calendar — note card */}
-        <div className="relative" ref={calendarRef}>
+        <div className="relative hidden sm:block" ref={calendarRef}>
           <button
             onClick={() => setShowCalendar(!showCalendar)}
             className="flex items-center gap-2 px-3 py-2.5 rounded-2xl border-b-[3px] shadow-sm transition-all duration-200 hover:-translate-y-0.5 text-sm text-[#4a4458]"
@@ -146,7 +162,7 @@ export function Taskbar({
             }}
           >
             <CalendarIcon className="w-4 h-4 text-[#a78bfa]" />
-            <span className="hidden sm:inline" style={{ fontWeight: 500 }}>March 2026</span>
+            <span className="hidden md:inline" style={{ fontWeight: 500 }}>March 2026</span>
             <ChevronDown
               className={`w-3.5 h-3.5 text-[#a78bfa] transition-transform duration-200 ${showCalendar ? "rotate-180" : ""}`}
             />
@@ -180,11 +196,12 @@ export function Taskbar({
 
           {showNotifications && (
             <div
-              className="absolute right-0 mt-2 w-96 rounded-3xl overflow-hidden z-50 border-b-4"
+              className="absolute right-0 mt-2 w-[calc(100vw-2rem)] sm:w-96 rounded-3xl overflow-hidden z-50 border-b-4"
               style={{
                 backgroundColor: "#fff",
                 borderBottomColor: "rgba(196,181,253,0.4)",
                 boxShadow: "0 16px 32px -4px rgba(167,139,250,0.2), 0 4px 12px -2px rgba(167,139,250,0.15)",
+                maxWidth: "calc(100vw - 1rem)",
               }}
             >
               <div className="px-5 py-3.5 border-b border-[rgba(167,139,250,0.1)] flex items-center justify-between" style={{ backgroundColor: "#fef9ec" }}>
@@ -199,7 +216,7 @@ export function Taskbar({
                 )}
               </div>
 
-              <div className="max-h-96 overflow-y-auto">
+              <div className="max-h-80 sm:max-h-96 overflow-y-auto">
                 {notifications.length === 0 ? (
                   <div className="p-8 text-center">
                     <Bell className="w-10 h-10 mx-auto mb-3 text-[#e9d5ff]" />
@@ -237,22 +254,22 @@ export function Taskbar({
 
         {/* User + Logout — note card */}
         <div
-          className="flex items-center gap-2 px-3 py-2 rounded-2xl border-b-[3px] shadow-sm"
+          className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-2 rounded-2xl border-b-[3px] shadow-sm"
           style={{
             backgroundColor: "#fff",
             borderBottomColor: "rgba(196,181,253,0.5)",
             boxShadow: "0 3px 8px -2px rgba(167,139,250,0.12)",
           }}
         >
-          <div className="w-7 h-7 bg-gradient-to-br from-[#a78bfa] to-[#c4b5fd] rounded-xl flex items-center justify-center shadow-sm">
+          <div className="w-7 h-7 bg-gradient-to-br from-[#a78bfa] to-[#c4b5fd] rounded-xl flex items-center justify-center shadow-sm flex-shrink-0">
             <User className="w-3.5 h-3.5 text-white" />
           </div>
-          <span className="text-sm text-[#4a4458] hidden sm:block" style={{ fontWeight: 500 }}>
+          <span className="text-sm text-[#4a4458] hidden sm:block max-w-[80px] truncate" style={{ fontWeight: 500 }}>
             {userName}
           </span>
           <button
             onClick={handleLogout}
-            className="ml-1 w-7 h-7 rounded-xl flex items-center justify-center hover:bg-[#fecdd3] transition-colors duration-200 group"
+            className="ml-0.5 w-7 h-7 rounded-xl flex items-center justify-center hover:bg-[#fecdd3] transition-colors duration-200 group"
             title="Sign Out"
           >
             <LogOut className="w-3.5 h-3.5 text-[#9b8fad] group-hover:text-[#fb7185] transition-colors" />

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Sparkles, StickyNote, Plus, Hash, Trash2 } from "lucide-react";
+import { Sparkles, StickyNote, Plus, Hash, Trash2, X } from "lucide-react";
 
 interface Category {
   id: string;
@@ -15,6 +15,8 @@ interface SidebarProps {
   onDeleteCategory: (name: string) => void;
   noteCounts: Record<string, number>;
   totalNotes: number;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 const CATEGORY_COLORS = [
@@ -29,6 +31,8 @@ export function Sidebar({
   onDeleteCategory,
   noteCounts,
   totalNotes,
+  isOpen,
+  onClose,
 }: SidebarProps) {
   const [isAdding, setIsAdding] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState("");
@@ -49,13 +53,29 @@ export function Sidebar({
   };
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-64 bg-white border-r border-[rgba(167,139,250,0.15)] p-6 flex flex-col shadow-lg shadow-purple-100/20 z-40">
-      {/* Logo */}
+    <aside
+      className={`
+        fixed left-0 top-0 h-screen w-64 bg-white border-r border-[rgba(167,139,250,0.15)]
+        p-6 flex flex-col shadow-lg shadow-purple-100/20 z-40
+        transition-transform duration-300 ease-in-out
+        ${isOpen ? "translate-x-0" : "-translate-x-full"}
+        lg:translate-x-0
+      `}
+    >
+      {/* Logo + Mobile close button */}
       <div className="flex items-center gap-3 mb-10">
-        <div className="w-10 h-10 bg-gradient-to-br from-[#a78bfa] to-[#c4b5fd] rounded-2xl flex items-center justify-center shadow-md shadow-purple-200/50 transform -rotate-3 hover:rotate-0 transition-transform">
+        <div className="w-10 h-10 bg-gradient-to-br from-[#a78bfa] to-[#c4b5fd] rounded-2xl flex items-center justify-center shadow-md shadow-purple-200/50 transform -rotate-3 hover:rotate-0 transition-transform flex-shrink-0">
           <Sparkles className="w-5 h-5 text-white" />
         </div>
-        <span className="text-xl text-[#4a4458]" style={{ fontWeight: 700 }}>Marginalia</span>
+        <span className="text-xl text-[#4a4458] flex-1" style={{ fontWeight: 700 }}>Marginalia</span>
+        {/* Close button — only visible on mobile */}
+        <button
+          onClick={onClose}
+          className="lg:hidden w-8 h-8 rounded-xl flex items-center justify-center hover:bg-[#fecdd3] transition-colors duration-200 flex-shrink-0"
+          aria-label="Close sidebar"
+        >
+          <X className="w-4 h-4 text-[#9b8fad]" />
+        </button>
       </div>
 
       {/* All Notes */}

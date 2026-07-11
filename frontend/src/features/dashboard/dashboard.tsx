@@ -73,6 +73,18 @@ export function Dashboard() {
   const [searchQuery, setSearchQuery] = useState("");
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // Close sidebar on desktop resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setIsSidebarOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // ─── Load initial data ──────────────────────────────────────────────────
   const fetchData = useCallback(async () => {
@@ -267,15 +279,28 @@ export function Dashboard() {
     <div className="min-h-screen bg-[#faf8fc] flex">
       <Sidebar
         selectedCategory={selectedCategory}
-        onSelectCategory={setSelectedCategory}
+        onSelectCategory={(cat) => {
+          setSelectedCategory(cat);
+          setIsSidebarOpen(false); // close drawer on mobile after selecting
+        }}
         categories={categories}
         onAddCategory={handleAddCategory}
         onDeleteCategory={handleDeleteCategory}
         noteCounts={noteCounts}
         totalNotes={notes.length}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
       />
 
-      <div className="flex-1 ml-64 flex flex-col">
+      {/* Mobile backdrop */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/30 backdrop-blur-sm z-30 lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
+      <div className="flex-1 lg:ml-64 flex flex-col min-w-0">
         <Taskbar
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
@@ -285,15 +310,16 @@ export function Dashboard() {
           notifications={notifications}
           onMarkNotificationRead={handleMarkNotificationRead}
           onClearAllNotifications={handleClearAllNotifications}
+          onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
         />
 
-        <main className="flex-1 p-8">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8">
           <div className="max-w-7xl mx-auto">
-            <div className="mb-8">
-              <h1 className="text-4xl text-[#4a4458] mb-2" style={{ fontWeight: 700 }}>
+            <div className="mb-6 sm:mb-8">
+              <h1 className="text-2xl sm:text-4xl text-[#4a4458] mb-2" style={{ fontWeight: 700 }}>
                 {selectedCategory}
               </h1>
-              <p className="text-[#9b8fad]">
+              <p className="text-[#9b8fad] text-sm sm:text-base">
                 {filteredNotes.length} {filteredNotes.length === 1 ? "note" : "notes"}
                 {searchQuery && ` matching "${searchQuery}"`}
               </p>

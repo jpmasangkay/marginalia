@@ -78,20 +78,20 @@ export function AddNoteModal({ isOpen, onClose, onAdd, categories }: AddNoteModa
   return (
     <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div 
-        className="rounded-3xl shadow-2xl max-w-2xl w-full p-8 max-h-[90vh] overflow-y-auto transform rotate-1 border-b-4"
+        className="rounded-3xl shadow-2xl max-w-2xl w-full p-4 sm:p-8 max-h-[90vh] overflow-y-auto transform rotate-1 border-b-4"
         style={{
           backgroundColor: selectedColor || '#fef3c7',
           borderBottomColor: `${selectedColor}dd`,
         }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-3xl text-[#4a4458] transform -rotate-1" style={{ fontWeight: 700 }}>new note!</h2>
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
+          <h2 className="text-xl sm:text-3xl text-[#4a4458] transform -rotate-1" style={{ fontWeight: 700 }}>new note!</h2>
           <button
             onClick={onClose}
-            className="w-11 h-11 bg-white/80 rounded-full flex items-center justify-center hover:bg-[#fb7185] transition-all duration-200 shadow-md hover:scale-110 group"
+            className="w-10 h-10 sm:w-11 sm:h-11 bg-white/80 rounded-full flex items-center justify-center hover:bg-[#fb7185] transition-all duration-200 shadow-md hover:scale-110 group flex-shrink-0"
           >
-            <X className="w-5 h-5 text-[#fb7185] group-hover:text-white" />
+            <X className="w-4 h-4 sm:w-5 sm:h-5 text-[#fb7185] group-hover:text-white" />
           </button>
         </div>
 
@@ -241,7 +241,7 @@ export function AddNoteModal({ isOpen, onClose, onAdd, categories }: AddNoteModa
                     key={colorOption.name}
                     type="button"
                     onClick={() => setSelectedColor(colorOption.color)}
-                    className={`h-16 rounded-3xl transition-all duration-200 transform hover:scale-110 hover:rotate-0 border-4 ${rotation} ${
+                    className={`h-12 sm:h-16 rounded-3xl transition-all duration-200 transform hover:scale-110 hover:rotate-0 border-4 ${rotation} ${
                       selectedColor === colorOption.color
                         ? "border-white scale-110 shadow-lg"
                         : "border-white/50 hover:border-white shadow-md"
