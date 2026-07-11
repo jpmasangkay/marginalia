@@ -32,14 +32,19 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
+    // Don't retry for these endpoints — callers handle 401 themselves
+    const isAuthCheck = originalRequest.url?.includes('/auth/me');
+    const isRefresh = originalRequest.url?.includes('/auth/refresh');
+    const isLogin = originalRequest.url?.includes('/auth/login');
+
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      !originalRequest.url?.includes('/auth/refresh') &&
-      !originalRequest.url?.includes('/auth/login')
+      !isAuthCheck &&
+      !isRefresh &&
+      !isLogin
     ) {
       if (isRefreshing) {
-        // Queue the request until refresh completes
         return new Promise<void>((resolve) => {
           refreshSubscribers.push(resolve);
         }).then(() => api(originalRequest));
@@ -55,8 +60,10 @@ api.interceptors.response.use(
         return api(originalRequest);
       } catch {
         isRefreshing = false;
-        // Refresh failed — redirect to login
-        window.location.href = '/login';
+        // Only redirect if not already on login page
+        if (window.location.pathname !== '/login') {
+          window.location.href = '/login';
+        }
         return Promise.reject(error);
       }
     }
