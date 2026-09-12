@@ -1,5 +1,16 @@
 import { Trash2, CheckSquare, Square, CalendarDays } from "lucide-react";
 import type { Note, ChecklistItem } from "../dashboard";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "../../../shared/ui/alert-dialog";
 
 interface StickyNoteProps {
   note: Note;
@@ -23,18 +34,44 @@ export function StickyNote({ note, onDelete, onToggleChecklistItem }: StickyNote
         borderBottomColor: `${note.color}dd`
       }}
     >
-      {/* Top row: category badge + delete button */}
+      {/* Top row: category badge + delete button with confirmation */}
       <div className="flex items-start justify-between gap-2 mb-3">
         <div className="inline-block px-3 py-1.5 bg-white/70 backdrop-blur-sm rounded-full text-xs text-[#4a4458] shadow-sm border border-white/50 transform -rotate-1 max-w-[calc(100%-44px)] truncate">
           {note.category}
         </div>
-        {/* Delete Button */}
-        <button
-          onClick={() => onDelete(note.id)}
-          className="flex-shrink-0 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-[#fb7185] hover:scale-110 shadow-md group/delete"
-        >
-          <Trash2 className="w-4 h-4 text-[#fb7185] group-hover/delete:text-white transition-colors" />
-        </button>
+
+        {/* Destructive Delete Confirmation Dialog */}
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <button
+              className="flex-shrink-0 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-[#fb7185] hover:scale-110 shadow-md group/delete"
+              aria-label="Delete note"
+            >
+              <Trash2 className="w-4 h-4 text-[#fb7185] group-hover/delete:text-white transition-colors" />
+            </button>
+          </AlertDialogTrigger>
+          <AlertDialogContent className="rounded-3xl bg-white border-b-4 border-rose-200 shadow-2xl p-6 sm:max-w-md">
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-xl font-bold text-[#4a4458]">
+                Delete this note?
+              </AlertDialogTitle>
+              <AlertDialogDescription className="text-sm text-[#9b8fad] leading-relaxed">
+                Are you sure you want to delete <span className="font-semibold text-[#4a4458]">"{note.title}"</span>? This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter className="flex gap-2 sm:gap-3 mt-4">
+              <AlertDialogCancel className="rounded-2xl border-purple-200 hover:bg-purple-50 text-[#4a4458] font-semibold">
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => onDelete(note.id)}
+                className="rounded-2xl bg-gradient-to-r from-rose-500 to-rose-400 text-white font-semibold hover:from-rose-600 hover:to-rose-500 shadow-md"
+              >
+                Delete Note
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
 
       {/* Title */}

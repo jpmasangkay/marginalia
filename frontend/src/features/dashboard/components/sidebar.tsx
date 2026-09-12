@@ -1,5 +1,16 @@
 import { useState } from "react";
 import { Sparkles, StickyNote, Plus, Hash, Trash2, X } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "../../../shared/ui/alert-dialog";
 
 interface Category {
   id: string;
@@ -191,15 +202,41 @@ export function Sidebar({
                 </button>
                 <div className="flex items-center gap-2">
                   <span className="text-xs bg-white/90 px-2 py-0.5 rounded-full font-semibold shadow-sm">{count}</span>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onDeleteCategory(category.name);
-                    }}
-                    className="w-7 h-7 rounded-xl flex items-center justify-center opacity-0 group-hover:opacity-100 hover:bg-[#fecdd3] transition-all duration-200 transform hover:scale-110"
-                  >
-                    <Trash2 className="w-3.5 h-3.5 text-[#fb7185]" />
-                  </button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <button
+                        onClick={(e) => e.stopPropagation()}
+                        className="w-7 h-7 rounded-xl flex items-center justify-center opacity-0 group-hover:opacity-100 hover:bg-[#fecdd3] transition-all duration-200 transform hover:scale-110"
+                        aria-label={`Delete category ${category.name}`}
+                      >
+                        <Trash2 className="w-3.5 h-3.5 text-[#fb7185]" />
+                      </button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent
+                      onClick={(e) => e.stopPropagation()}
+                      className="rounded-3xl bg-white border-b-4 border-rose-200 shadow-2xl p-6 sm:max-w-md"
+                    >
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className="text-xl font-bold text-[#4a4458]">
+                          Delete "{category.name}" category?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription className="text-sm text-[#9b8fad] leading-relaxed">
+                          Notes in this category will be preserved and reassigned to <span className="font-semibold text-[#4a4458]">"Uncategorized"</span>.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter className="flex gap-2 sm:gap-3 mt-4">
+                        <AlertDialogCancel className="rounded-2xl border-purple-200 hover:bg-purple-50 text-[#4a4458] font-semibold">
+                          Cancel
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => onDeleteCategory(category.name)}
+                          className="rounded-2xl bg-gradient-to-r from-rose-500 to-rose-400 text-white font-semibold hover:from-rose-600 hover:to-rose-500 shadow-md"
+                        >
+                          Delete Category
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </div>
             );

@@ -4,9 +4,11 @@ import mongoose from 'mongoose';
 import helmet from 'helmet';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import mongoSanitize from 'express-mongo-sanitize';
+import hpp from 'hpp';
+import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
 
+import mongoSanitize from './middleware/sanitize';
 import authRoutes from './routes/auth';
 import notesRoutes from './routes/notes';
 import categoriesRoutes from './routes/categories';
@@ -27,6 +29,23 @@ if (!process.env.JWT_SECRET || !process.env.JWT_REFRESH_SECRET) {
   console.error('JWT_SECRET and JWT_REFRESH_SECRET must be set.');
   process.exit(1);
 }
+
+// ─── Rate Limiting ────────────────────────────────────────────────────────────
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 150, // limit each IP to 150 requests per window
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many requests from this IP, please try again after 15 minutes.' },
+});
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 15, // limit each IP to 15 auth attempts per window
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many login attempts, please try again after 15 minutes.' },
+});
 
 // ─── Security Middleware ──────────────────────────────────────────────────────
 
@@ -50,20 +69,30 @@ app.use(
   })
 );
 
+// General rate limiter for all /api endpoints
+app.use('/api', apiLimiter);
+
 // ─── General Middleware ───────────────────────────────────────────────────────
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 app.use(express.json({ limit: '50kb' })); // Reject oversized payloads
 app.use(express.urlencoded({ extended: true, limit: '50kb' }));
 app.use(cookieParser());
 
+// HTTP Parameter Pollution protection
+app.use(hpp());
+
 // Sanitize user-supplied data against NoSQL injection
-// Strips any keys containing '$' or '.' from req.body, req.query, req.params
-app.use(mongoSanitize({ replaceWith: '_' }));
+// In-place stripping of '$' and '.' operators without reassigning getter-only req.query
+app.use(mongoSanitize);
 
 // ─── Routes ───────────────────────────────────────────────────────────────────
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
+
+// Stricter limiter on sensitive auth paths
+app.use('/api/auth/login', authLimiter);
+app.use('/api/auth/register', authLimiter);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/notes', notesRoutes);

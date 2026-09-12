@@ -1,15 +1,27 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router";
 import { toast } from "sonner";
 import { Sidebar } from "./components/sidebar";
 import { NotesGrid } from "./components/notes-grid";
 import { AddNoteModal } from "./components/add-note-modal";
 import { Taskbar } from "./components/taskbar";
-import { notesApi, categoriesApi } from "../../lib/api";
-import type { ApiNote, ApiCategory, NotePayload } from "../../lib/api";
+import { NotesSkeleton } from "./components/notes-skeleton";
+import { CommandPalette } from "./components/command-palette";
+import { ErrorBoundary } from "../../shared/components/error-boundary";
+import { useUiStore } from "./stores/useUiStore";
+import {
+  useNotes,
+  useCategories,
+  useCreateNote,
+  useDeleteNote,
+  useToggleChecklistItem,
+  useCreateCategory,
+  useDeleteCategory,
+} from "./hooks/useNotesQuery";
+import type { NotePayload } from "../../lib/api";
 import { useAuth } from "../../lib/auth-context";
 
-// ─── Local types (mapped from API types) ─────────────────────────────────────
-
+// ─── Exported Types ──────────────────────────────────────────────────────────
 export interface ChecklistItem {
   id: string;
   text: string;
@@ -30,84 +42,73 @@ export interface Notification {
   id: string;
   message: string;
   timestamp: Date;
-  type: 'created' | 'updated' | 'deleted';
+  type: "created" | "updated" | "deleted";
   read: boolean;
 }
 
-interface Category {
-  id: string;
-  name: string;
-  color: string;
-}
-
-// ─── Mappers ─────────────────────────────────────────────────────────────────
-
-function mapNote(apiNote: ApiNote): Note {
-  return {
-    id: apiNote._id,
-    title: apiNote.title,
-    content: apiNote.content,
-    category: apiNote.category,
-    color: apiNote.color,
-    createdAt: new Date(apiNote.createdAt),
-    checklist: apiNote.checklist.map((item) => ({
-      id: item._id,
-      text: item.text,
-      checked: item.checked,
-    })),
-  };
-}
-
-function mapCategory(apiCat: ApiCategory): Category {
-  return { id: apiCat._id, name: apiCat.name, color: apiCat.color };
-}
-
-// ─── Dashboard ───────────────────────────────────────────────────────────────
-
 export function Dashboard() {
   const { user } = useAuth();
-  const [notes, setNotes] = useState<Note[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>("All Notes");
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // ─── URL State Synchronization ──────────────────────────────────────────────
+  const selectedCategory = searchParams.get("category") || "All Notes";
+  const setSelectedCategory = (category: string) => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      if (category === "All Notes") {
+        next.delete("category");
+      } else {
+        next.set("category", category);
+      }
+      return next;
+    });
+  };
+
+  // ─── Client UI State (Zustand Store) ────────────────────────────────────────
+  const {
+    isAddModalOpen,
+    openAddModal,
+    closeAddModal,
+    isSidebarOpen,
+    setSidebarOpen,
+    toggleSidebar,
+  } = useUiStore();
+
   const [searchQuery, setSearchQuery] = useState("");
   const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // ─── Server State (TanStack Query) ──────────────────────────────────────────
+  const {
+    data: notes = [],
+    isLoading: isNotesLoading,
+    isError: isNotesError,
+    refetch: refetchNotes,
+  } = useNotes();
+
+  const {
+    data: categories = [],
+    isLoading: isCategoriesLoading,
+  } = useCategories();
+
+  const createNoteMutation = useCreateNote();
+  const deleteNoteMutation = useDeleteNote();
+  const toggleChecklistMutation = useToggleChecklistItem();
+  const createCategoryMutation = useCreateCategory();
+  const deleteCategoryMutation = useDeleteCategory();
 
   // Close sidebar on desktop resize
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
-        setIsSidebarOpen(false);
+        setSidebarOpen(false);
       }
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [setSidebarOpen]);
 
-  // ─── Load initial data ──────────────────────────────────────────────────
-  const fetchData = useCallback(async () => {
-    try {
-      const [notesRes, catsRes] = await Promise.all([
-        notesApi.getAll(),
-        categoriesApi.getAll(),
-      ]);
-      setNotes(notesRes.data.notes.map(mapNote));
-      setCategories(catsRes.data.categories.map(mapCategory));
-    } catch {
-      toast.error("Failed to load your notes. Please refresh.");
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    void fetchData();
-  }, [fetchData]);
-
-  // ─── Notifications helper ───────────────────────────────────────────────
-  const addNotification = (message: string, type: Notification['type']) => {
+  // ─── Notifications helper ───────────────────────────────────────────────────
+  const addNotification = (message: string, type: Notification["type"]) => {
     const notification: Notification = {
       id: Date.now().toString(),
       message,
@@ -118,114 +119,112 @@ export function Dashboard() {
     setNotifications((prev) => [notification, ...prev]);
   };
 
-  // ─── Note handlers ──────────────────────────────────────────────────────
+  // ─── Note Handlers ──────────────────────────────────────────────────────────
   const handleAddNote = async (newNote: Omit<Note, "id" | "createdAt">) => {
-    try {
-      const payload: NotePayload = {
-        title: newNote.title,
-        content: newNote.content,
-        category: newNote.category,
-        color: newNote.color,
-        checklist: newNote.checklist?.map((item) => ({
-          text: item.text,
-          checked: item.checked,
-        })),
-      };
-      const { data } = await notesApi.create(payload);
-      const note = mapNote(data.note);
-      setNotes((prev) => [note, ...prev]);
-      addNotification(`Created note: "${newNote.title}"`, 'created');
-      setIsAddModalOpen(false);
-      toast.success("Note created! ✨");
-    } catch {
-      toast.error("Failed to create note. Please try again.");
-    }
+    const payload: NotePayload = {
+      title: newNote.title,
+      content: newNote.content,
+      category: newNote.category,
+      color: newNote.color,
+      checklist: newNote.checklist?.map((item) => ({
+        text: item.text,
+        checked: item.checked,
+      })),
+    };
+
+    createNoteMutation.mutate(payload, {
+      onSuccess: () => {
+        addNotification(`Created note: "${newNote.title}"`, "created");
+        closeAddModal();
+        toast.success("Note created! ✨");
+      },
+      onError: () => {
+        toast.error("Failed to create note. Please try again.");
+      },
+    });
   };
 
   const handleDeleteNote = async (id: string) => {
     const noteToDelete = notes.find((n) => n.id === id);
-    // Optimistic update
-    setNotes((prev) => prev.filter((n) => n.id !== id));
-    try {
-      await notesApi.delete(id);
-      if (noteToDelete) {
-        addNotification(`Deleted note: "${noteToDelete.title}"`, 'deleted');
-      }
-      toast.success("Note deleted.");
-    } catch {
-      // Rollback
-      if (noteToDelete) {
-        setNotes((prev) => [noteToDelete, ...prev]);
-      }
-      toast.error("Failed to delete note. Please try again.");
-    }
+
+    deleteNoteMutation.mutate(id, {
+      onSuccess: () => {
+        if (noteToDelete) {
+          addNotification(`Deleted note: "${noteToDelete.title}"`, "deleted");
+        }
+        // Action feedback with built-in Undo action
+        toast.success("Note deleted.", {
+          action: noteToDelete
+            ? {
+                label: "Undo",
+                onClick: () => {
+                  handleAddNote({
+                    title: noteToDelete.title,
+                    content: noteToDelete.content,
+                    category: noteToDelete.category,
+                    color: noteToDelete.color,
+                    checklist: noteToDelete.checklist,
+                  });
+                },
+              }
+            : undefined,
+        });
+      },
+      onError: () => {
+        toast.error("Failed to delete note. Restoring view...");
+      },
+    });
   };
 
   const handleToggleChecklistItem = async (noteId: string, itemId: string) => {
-    // Optimistic update
-    const prevNotes = notes;
-    setNotes((prev) =>
-      prev.map((note) => {
-        if (note.id !== noteId || !note.checklist) return note;
-        return {
-          ...note,
-          checklist: note.checklist.map((item) =>
-            item.id === itemId ? { ...item, checked: !item.checked } : item
-          ),
-        };
-      })
-    );
+    const note = notes.find((n) => n.id === noteId);
+    const item = note?.checklist?.find((i) => i.id === itemId);
 
-    try {
-      const { data } = await notesApi.toggleChecklistItem(noteId, itemId);
-      const updatedNote = mapNote(data.note);
-      setNotes((prev) => prev.map((n) => (n.id === noteId ? updatedNote : n)));
-
-      const note = prevNotes.find((n) => n.id === noteId);
-      const item = note?.checklist?.find((i) => i.id === itemId);
-      if (item) {
-        const action = item.checked ? 'unchecked' : 'checked';
-        addNotification(`${action} "${item.text}" in "${note!.title}"`, 'updated');
+    toggleChecklistMutation.mutate(
+      { noteId, itemId },
+      {
+        onSuccess: () => {
+          if (item && note) {
+            const action = item.checked ? "unchecked" : "checked";
+            addNotification(`${action} "${item.text}" in "${note.title}"`, "updated");
+          }
+        },
+        onError: () => {
+          toast.error("Failed to update checklist item. Reverted.");
+        },
       }
-    } catch {
-      // Rollback
-      setNotes(prevNotes);
-      toast.error("Failed to update checklist item.");
-    }
+    );
   };
 
-  // ─── Category handlers ──────────────────────────────────────────────────
+  // ─── Category Handlers ──────────────────────────────────────────────────────
   const handleAddCategory = async (category: { name: string; color: string }) => {
-    try {
-      const { data } = await categoriesApi.create(category.name, category.color);
-      setCategories((prev) => [...prev, mapCategory(data.category)]);
-      toast.success(`Category "${category.name}" created!`);
-    } catch (err: unknown) {
-      const axiosErr = err as { response?: { data?: { message?: string } } };
-      const msg = axiosErr.response?.data?.message ?? "Failed to create category.";
-      toast.error(msg);
-    }
+    createCategoryMutation.mutate(category, {
+      onSuccess: () => {
+        toast.success(`Category "${category.name}" created!`);
+      },
+      onError: (err: any) => {
+        const msg = err?.response?.data?.message ?? "Failed to create category.";
+        toast.error(msg);
+      },
+    });
   };
 
   const handleDeleteCategory = async (name: string) => {
     const category = categories.find((c) => c.name === name);
     if (!category) return;
 
-    // Optimistic update
-    setCategories((prev) => prev.filter((c) => c.name !== name));
-    if (selectedCategory === name) setSelectedCategory("All Notes");
-
-    try {
-      await categoriesApi.delete(category.id);
-      // Backend already reassigns notes — refresh them
-      const { data } = await notesApi.getAll();
-      setNotes(data.notes.map(mapNote));
-      toast.success(`Category "${name}" deleted.`);
-    } catch {
-      // Rollback
-      setCategories((prev) => [...prev, category]);
-      toast.error("Failed to delete category.");
+    if (selectedCategory === name) {
+      setSelectedCategory("All Notes");
     }
+
+    deleteCategoryMutation.mutate(category.id, {
+      onSuccess: () => {
+        toast.success(`Category "${name}" deleted.`);
+      },
+      onError: () => {
+        toast.error("Failed to delete category.");
+      },
+    });
   };
 
   const handleMarkNotificationRead = (id: string) => {
@@ -236,7 +235,7 @@ export function Dashboard() {
 
   const handleClearAllNotifications = () => setNotifications([]);
 
-  // ─── Derived state ──────────────────────────────────────────────────────
+  // ─── Derived State ──────────────────────────────────────────────────────────
   const noteCounts: Record<string, number> = {};
   notes.forEach((note) => {
     noteCounts[note.category] = (noteCounts[note.category] || 0) + 1;
@@ -263,25 +262,25 @@ export function Dashboard() {
     color: note.color,
   }));
 
-  // ─── Loading state ──────────────────────────────────────────────────────
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-[#faf8fc] flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-14 h-14 rounded-3xl bg-gradient-to-br from-[#a78bfa] to-[#c4b5fd] animate-pulse shadow-lg shadow-purple-200/50" />
-          <p className="text-[#9b8fad] font-medium">loading your notes...</p>
-        </div>
-      </div>
-    );
-  }
+  const isLoading = isNotesLoading || isCategoriesLoading;
 
   return (
     <div className="min-h-screen bg-[#faf8fc] flex">
+      {/* Global Command Palette (Cmd+K / Ctrl+K) */}
+      <CommandPalette
+        notes={notes}
+        categories={categories}
+        selectedCategory={selectedCategory}
+        onSelectCategory={(cat) => setSelectedCategory(cat)}
+        onClearSearch={() => setSearchQuery("")}
+      />
+
+      {/* Sidebar Navigation */}
       <Sidebar
         selectedCategory={selectedCategory}
         onSelectCategory={(cat) => {
           setSelectedCategory(cat);
-          setIsSidebarOpen(false); // close drawer on mobile after selecting
+          setSidebarOpen(false); // close drawer on mobile after selection
         }}
         categories={categories}
         onAddCategory={handleAddCategory}
@@ -289,57 +288,101 @@ export function Dashboard() {
         noteCounts={noteCounts}
         totalNotes={notes.length}
         isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
+        onClose={() => setSidebarOpen(false)}
       />
 
       {/* Mobile backdrop */}
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-black/30 backdrop-blur-sm z-30 lg:hidden"
-          onClick={() => setIsSidebarOpen(false)}
+          onClick={() => setSidebarOpen(false)}
         />
       )}
 
+      {/* Main Content Area */}
       <div className="flex-1 lg:ml-64 flex flex-col min-w-0">
         <Taskbar
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
-          onNewNote={() => setIsAddModalOpen(true)}
+          onNewNote={openAddModal}
           userName={user?.name}
           markedDates={markedDates}
           notifications={notifications}
           onMarkNotificationRead={handleMarkNotificationRead}
           onClearAllNotifications={handleClearAllNotifications}
-          onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
+          onToggleSidebar={toggleSidebar}
         />
 
         <main className="flex-1 p-4 sm:p-6 lg:p-8">
           <div className="max-w-7xl mx-auto">
-            <div className="mb-6 sm:mb-8">
-              <h1 className="text-2xl sm:text-4xl text-[#4a4458] mb-2" style={{ fontWeight: 700 }}>
-                {selectedCategory}
-              </h1>
-              <p className="text-[#9b8fad] text-sm sm:text-base">
-                {filteredNotes.length} {filteredNotes.length === 1 ? "note" : "notes"}
-                {searchQuery && ` matching "${searchQuery}"`}
-              </p>
+            {/* Header */}
+            <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+              <div>
+                <h1 className="text-2xl sm:text-4xl text-[#4a4458] mb-2 font-bold">
+                  {selectedCategory}
+                </h1>
+                <p className="text-[#9b8fad] text-sm sm:text-base">
+                  {isLoading
+                    ? "Loading your notes..."
+                    : `${filteredNotes.length} ${
+                        filteredNotes.length === 1 ? "note" : "notes"
+                      }${searchQuery ? ` matching "${searchQuery}"` : ""}`}
+                </p>
+              </div>
+
+              {selectedCategory !== "All Notes" && (
+                <button
+                  onClick={() => setSelectedCategory("All Notes")}
+                  className="text-xs font-semibold text-[#a78bfa] hover:underline self-start sm:self-auto"
+                >
+                  ← Back to All Notes
+                </button>
+              )}
             </div>
 
-            <NotesGrid
-              notes={filteredNotes}
-              onDeleteNote={handleDeleteNote}
-              onToggleChecklistItem={handleToggleChecklistItem}
-            />
+            {/* Error or Content or Layout-Matched Skeletons (Zero CLS) */}
+            <ErrorBoundary fallbackTitle="Could not load notes">
+              {isLoading ? (
+                <NotesSkeleton />
+              ) : isNotesError ? (
+                <div className="p-8 bg-white rounded-3xl border-b-4 border-rose-200 text-center shadow-md">
+                  <p className="text-rose-500 font-semibold mb-3">
+                    Failed to fetch notes from the server.
+                  </p>
+                  <button
+                    onClick={() => refetchNotes()}
+                    className="px-4 py-2 bg-purple-100 text-[#a78bfa] rounded-xl text-sm font-semibold hover:bg-purple-200 transition-colors"
+                  >
+                    Try Refreshing
+                  </button>
+                </div>
+              ) : (
+                <NotesGrid
+                  notes={filteredNotes}
+                  onDeleteNote={handleDeleteNote}
+                  onToggleChecklistItem={handleToggleChecklistItem}
+                  onNewNote={openAddModal}
+                  onResetFilter={() => {
+                    setSearchQuery("");
+                    setSelectedCategory("All Notes");
+                  }}
+                  searchQuery={searchQuery}
+                  selectedCategory={selectedCategory}
+                />
+              )}
+            </ErrorBoundary>
           </div>
         </main>
       </div>
 
+      {/* Add Note Modal */}
       <AddNoteModal
         isOpen={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
+        onClose={closeAddModal}
         onAdd={handleAddNote}
         categories={categories}
       />
     </div>
   );
 }
+export default Dashboard;

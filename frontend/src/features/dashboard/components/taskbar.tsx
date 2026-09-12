@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Calendar } from "./calendar";
 import { useAuth } from "../../../lib/auth-context";
+import { useUiStore } from "../stores/useUiStore";
 import type { Notification } from "../dashboard";
 
 interface TaskbarProps {
@@ -34,6 +35,7 @@ export function Taskbar({
   const notificationsRef = useRef<HTMLDivElement>(null);
   const { logout } = useAuth();
   const navigate = useNavigate();
+  const toggleCommandPalette = useUiStore((s) => s.toggleCommandPalette);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -129,8 +131,15 @@ export function Taskbar({
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="Search your notes..."
-          className="w-full pl-10 pr-4 py-2.5 bg-transparent focus:outline-none text-sm text-[#4a4458] placeholder:text-[#c4b5fd]"
+          className="w-full pl-10 pr-16 py-2.5 bg-transparent focus:outline-none text-sm text-[#4a4458] placeholder:text-[#c4b5fd]"
         />
+        <button
+          onClick={toggleCommandPalette}
+          className="hidden sm:flex items-center gap-1 absolute right-3 top-1/2 -translate-y-1/2 px-2 py-0.5 rounded-lg bg-purple-50 hover:bg-purple-100 text-[#a78bfa] border border-purple-200/60 text-xs font-semibold shadow-xs transition-colors"
+          title="Open Command Palette (⌘K / Ctrl+K)"
+        >
+          <kbd className="font-mono text-[10px]">⌘K</kbd>
+        </button>
       </div>
 
       {/* Right side controls */}
